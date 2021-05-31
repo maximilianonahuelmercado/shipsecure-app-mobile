@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, ActivityIndicator} from 'react-native'
 
-const PedidoScreen = (props) => {
+const ChatBotScreen = (props) => {
     
     return (
         <ScrollView style={styles.container}>
@@ -31,4 +31,4 @@ const styles = StyleSheet.create(
     }
 )
 
-export default PedidoScreen
+export default ChatBotScreen
