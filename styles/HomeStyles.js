@@ -24,9 +24,10 @@ export default StyleSheet.create(
         pregunta:{
             padding:0,
             marginBottom: 50,
-            color: '#FF5733',
+            color: '#FF5A33',
             alignSelf: 'center',
-            fontSize: 15
+            fontSize: 15,
+            fontWeight: 'bold'
         },
         inputLabelCodigo:{
             padding: 10, 
@@ -38,38 +39,12 @@ export default StyleSheet.create(
             color: '#FFF',
             alignSelf: 'flex-start'
         },
-        input: {
-
-            padding: 10,
-            backgroundColor:'#2E4B5B',
-            borderStyle: 'solid',
-            color: '#FFF',
-            borderRadius: 25,
-            marginBottom: 15,
-            
-        },
-        botonSeguirEnvio: {
-            padding: 10,
-            marginBottom: 30,
-            marginRight: 50,
-        },
-        botonCrearEnvio: {
-            
-            padding: 10,
-            marginBottom: 30,
-            marginLeft: 50
-        },
-        botonEntregarPedido: {
-
-            paddingLeft:20,
-            marginBottom: 30,
-            alignSelf: 'center'
-        },
         inputLabelChatBot:{
             padding: 10, 
             color: '#FFF',
             fontWeight: 'bold',
-            alignSelf: 'center'
+            alignSelf: 'center',
+            marginTop: 15
         },
         botonChatBot: {
 
@@ -89,10 +64,9 @@ export default StyleSheet.create(
             marginLeft: 30
         },
         labelTextoEntregarPedido:{
-            padding: 10, 
-            color: '#FFF',
-            marginLeft: 30,
-            alignSelf: 'center'
+            marginTop: 10,
+            marginBottom: 5,
+            color: '#FFF'
         }
     }
 )

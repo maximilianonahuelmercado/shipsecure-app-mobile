@@ -6,7 +6,7 @@ const ChatBotScreen = (props) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.texto}>
-                <Text>ChatBotScreen</Text>       
+                <Text>ChatBotScreen</Text>
             </View>
             <View>
                 

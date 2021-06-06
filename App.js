@@ -6,38 +6,40 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import HomeScreen from './screens/HomeScreen'
-import UserHomeScreen from './screens/UserHomeScreen'
+import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import PedidoScreen from './screens/PedidoScreen'
 import ChatBotScreen from './screens/ChatBotScreen'
+import CrearEnvioScreen from './screens/CrearEnvioScreen';
 
 const Stack = createStackNavigator()
 
  function MyStack(){
   return(
       <Stack.Navigator screenOptions={{headerShown: false }}>
-        <Stack.Screen name="HomeScreen" component={HomeScreen}></Stack.Screen>
-        <Stack.Screen name="UserHomeScreen" component={UserHomeScreen}></Stack.Screen>
-        <Stack.Screen name="PedidoScreen" component={PedidoScreen}></Stack.Screen>
-        <Stack.Screen name="ChatBotScreen" component={ChatBotScreen}></Stack.Screen>
+        <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+        <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
+        <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
+        <Stack.Screen name="CrearEnvio" component={CrearEnvioScreen}></Stack.Screen>
+        <Stack.Screen name="ChatBot" component={ChatBotScreen}></Stack.Screen>
       </Stack.Navigator>
   )
 }
 
-const Drawer = createDrawerNavigator();
+/*const Drawer = createDrawerNavigator();
 
 function MyDrawer(){
   return(
-    <Drawer.Navigator>
-       <Drawer.Screen name="UserHomeScreen" component={MyStack}></Drawer.Screen>
+    <Drawer.Navigator initialRouteName="Home">
+       <Drawer.Screen name="Home" component={MyStack}></Drawer.Screen>
     </Drawer.Navigator>
   )
 
-}
+}*/
 
 export default function App() {
   return (
       <NavigationContainer>
-        <MyDrawer></MyDrawer>
+        <MyStack></MyStack>
       </NavigationContainer>
   );
 }

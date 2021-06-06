@@ -22,7 +22,7 @@ const PedidoScreen = (props) => {
            }
            else{
                //En caso de no encontrar el codigo vuelve a la pantalla UserHomeScreen hasta que ponga el id de envio valido
-               props.navigation.navigate('UserHomeScreen')
+               props.navigation.navigate('ConsultarPedido')
            }
         })
     }, [])
