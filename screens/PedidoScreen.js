@@ -36,8 +36,8 @@ const PedidoScreen = (props) => {
                 </View>
                 <View style={PedidoStyles.linea}/>
                 <View>
-                    <Text style={PedidoStyles.inputLabelTitulo}>Domicilio</Text>
-                    <Text style={PedidoStyles.inputLabelDatos}>{item.domicilio}</Text>
+                    <Text style={PedidoStyles.inputLabelTitulo}>Dirección de entrega</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{item.direccion}</Text>
                 </View>
                 <View>
                     <Text style={PedidoStyles.inputLabelTitulo}>Fecha estimada de entrega</Text>

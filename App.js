@@ -10,6 +10,7 @@ import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import PedidoScreen from './screens/PedidoScreen'
 import ChatBotScreen from './screens/ChatBotScreen'
 import CrearEnvioScreen from './screens/CrearEnvioScreen';
+import EnvioCreadoScreen from './screens/EnvioCreadoScreen'
 
 const Stack = createStackNavigator()
 
@@ -21,6 +22,7 @@ const Stack = createStackNavigator()
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
         <Stack.Screen name="CrearEnvio" component={CrearEnvioScreen}></Stack.Screen>
         <Stack.Screen name="ChatBot" component={ChatBotScreen}></Stack.Screen>
+        <Stack.Screen name="EnvioCreado" component={EnvioCreadoScreen}></Stack.Screen>
       </Stack.Navigator>
   )
 }
