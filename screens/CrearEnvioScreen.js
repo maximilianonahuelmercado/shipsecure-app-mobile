@@ -55,7 +55,11 @@ const CrearEnvioScreen = (props) => {
             fechaEntrega: fechaEntrega,
             horaEntrega: horaEntrega,
             peso: peso,
-            temperatura: temperatura
+            temperatura: temperatura,
+            //estos campos seran necesarios luego para asignar un repartidor, una smartbox
+            usuarioCreado: false,
+            idSmartBox: "",
+            idRepartidor: ""
         })
         props.navigation.navigate("EnvioCreado")
      }

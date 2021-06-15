@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from '@react-navigation/drawer'
-
+import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/HomeScreen'
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import PedidoScreen from './screens/PedidoScreen'
@@ -16,7 +16,7 @@ const Stack = createStackNavigator()
 
  function MyStack(){
   return(
-      <Stack.Navigator screenOptions={{headerShown: false }}>
+      <Stack.Navigator screenOptions={{headerShown: false } }>
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
@@ -27,21 +27,22 @@ const Stack = createStackNavigator()
   )
 }
 
-/*const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator();
 
 function MyDrawer(){
   return(
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator initialRouteName="Home" drawerStyle={{backgroundColor: "#08AFA5", }} drawerContentOptions={{activeTintColor: '#000',activeBackgroundColor: "rgba(255,255,255,0.5)"} }>
        <Drawer.Screen name="Home" component={MyStack}></Drawer.Screen>
+       <Drawer.Screen name="CrearEnvio" component={CrearEnvioScreen}></Drawer.Screen>
     </Drawer.Navigator>
   )
 
-}*/
+}
 
 export default function App() {
   return (
       <NavigationContainer>
-        <MyStack></MyStack>
+        <MyDrawer></MyDrawer>
       </NavigationContainer>
   );
 }

@@ -35,7 +35,7 @@ export default StyleSheet.create(
             paddingBottom:0,
             marginBottom:0,
             fontWeight: 'bold',
-            fontSize: 20,
+            fontSize: 15,
             color: '#08AFA5'
         },
         inputLabelDatos:{
@@ -45,12 +45,13 @@ export default StyleSheet.create(
             fontSize: 15,
             color: '#FFF'
         },
-        botonChatBot: {
+        botonMapa: {
 
             overflow: 'hidden',
             width: 150,
             borderRadius: 30,
             alignSelf: 'center',
+            marginBottom: 25
             
         }
     }

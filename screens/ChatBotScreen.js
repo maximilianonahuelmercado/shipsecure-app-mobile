@@ -1,17 +1,17 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, ActivityIndicator} from 'react-native'
+import { View, Text, ScrollView, StyleSheet, TextInput, ActivityIndicator, SafeAreaView} from 'react-native'
 
 const ChatBotScreen = (props) => {
+
     
     return (
+    <SafeAreaView>
         <ScrollView style={styles.container}>
-            <View style={styles.texto}>
-                <Text>ChatBotScreen</Text>
-            </View>
             <View>
                 
             </View>
         </ScrollView>
+    </SafeAreaView>
     )
 }
 

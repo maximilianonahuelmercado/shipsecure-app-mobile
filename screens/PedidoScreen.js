@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, FlatList, TextInput, ActivityIndicator} from 'react-native'
+import { View, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Button} from 'react-native'
 import { db }  from '../database/firebase'
 import PedidoStyles from '../styles/PedidoStyles'
+import { Ionicons , FontAwesome5 , FontAwesome } from '@expo/vector-icons';
 
 const PedidoScreen = (props) => {
 
@@ -29,7 +30,8 @@ const PedidoScreen = (props) => {
     
     return (
         <FlatList style={PedidoStyles.container} data={pedido} renderItem={({item}) => (
-            <ScrollView >
+          <SafeAreaView>
+            <ScrollView>
                 <View>
                     <Text style={PedidoStyles.inputLabelTituloPedidoID}>Código de envío</Text>
                     <Text style={PedidoStyles.inputLabelPedidoId}>{pedidoID}</Text>
@@ -51,7 +53,30 @@ const PedidoScreen = (props) => {
                     <Text style={PedidoStyles.inputLabelTitulo}>Observaciones</Text>
                     <Text style={PedidoStyles.inputLabelDatos}>{item.observaciones}</Text>
                 </View>
+                <View>
+                    <Text style={PedidoStyles.inputLabelTitulo}>Peso</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{item.peso}</Text>
+                </View>
+                <View>
+                    <Text style={PedidoStyles.inputLabelTitulo}>Temperatura</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{item.temperatura}</Text>
+                </View>
+                <View style={PedidoStyles.botonMapa}>
+                    <Button color="#08AFA5" title="Ver Mapa" onPress={() => props.navigation.navigate('ChatBot')}></Button>
+                </View>
+                <View style={{paddingTop: 10, flexDirection: "row", justifyContent: 'space-between'}}>
+                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
+                    <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate("Home")}></Ionicons>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
+                    <FontAwesome5 name="unlock-alt" size={50} color="#003748" onPress={() => props.navigation.navigate("Home")}></FontAwesome5>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
+                    <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("Home")}></FontAwesome>
+                </TouchableOpacity>
+            </View>
             </ScrollView>
+        </SafeAreaView>
         )}>
         </FlatList>
     )
