@@ -19,9 +19,7 @@ export default StyleSheet.create(
             flex: 1,
             padding: 10,
             color: '#08AFA5',
-            fontWeight: 'bold',
-    
-            
+            fontWeight: 'bold',    
         },
         input: {
             padding: 5,

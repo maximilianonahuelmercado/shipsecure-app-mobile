@@ -31,7 +31,7 @@ const PedidoScreen = (props) => {
     return (
         <FlatList style={PedidoStyles.container} data={pedido} renderItem={({item}) => (
           <SafeAreaView>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View>
                     <Text style={PedidoStyles.inputLabelTituloPedidoID}>Código de envío</Text>
                     <Text style={PedidoStyles.inputLabelPedidoId}>{pedidoID}</Text>
@@ -72,7 +72,7 @@ const PedidoScreen = (props) => {
                     <FontAwesome5 name="unlock-alt" size={50} color="#003748" onPress={() => props.navigation.navigate("Home")}></FontAwesome5>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("Home")}></FontAwesome>
+                    <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega})}></FontAwesome>
                 </TouchableOpacity>
             </View>
             </ScrollView>

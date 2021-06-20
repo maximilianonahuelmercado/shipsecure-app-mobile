@@ -14,7 +14,7 @@ export default StyleSheet.create(
             marginBottom:0,
             fontWeight: 'bold',
             fontSize: 20,
-            color: '#FFF'
+            color: '#08AFA5'
         },
         inputLabelPedidoId:{
             padding: 10,
@@ -22,11 +22,11 @@ export default StyleSheet.create(
             marginBottom: 5,
             fontWeight: 'bold',
             fontSize: 25,
-            color: '#08AFA5'
+            color: '#FFF'
         },
         linea:{
             
-            borderBottomColor: '#FF5733',
+            borderBottomColor: '#F7A583',
             borderBottomWidth: 1,
             marginBottom:10
         },
