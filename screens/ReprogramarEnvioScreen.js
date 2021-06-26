@@ -1,11 +1,33 @@
 import React, {useState } from 'react';
-import { View, Text, ScrollView, Button, TextInput, SafeAreaView} from 'react-native'
+import { View, Text, ScrollView, Button, TextInput, SafeAreaView, Platform} from 'react-native'
 import { MaterialIcons  } from '@expo/vector-icons'
 import ReprogramarEnvioStyles from '../styles/ReprogramarEnvioStyles'
 import {CheckBox} from 'react-native-elements'
 import { db }  from '../database/firebase'
+import DateTimePicker from '@react-native-community/datetimepicker'
+
 
 const ReprogramarEnvioScreen = (props) => {
+
+
+    const [date, setDate] = useState(new Date(Date.now()))
+    const [show, setShow] = useState(false)
+
+    //console.log(date.toISOString().split('T')[0])
+
+    const showMode = () => {
+        setShow(true)
+    }
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date
+        setDate(currentDate)
+        if(Platform.OS === 'android'){
+            setShow(false)
+        }
+    }
+
+
     const entityRef = db.collection('envios')
     //props necesarias para que los hooks tengan un valor por defecto, de lo contrario si algun dato no se quiere actualizar se va a updatear igual en la base como vacio
     const idPedido = (props.route.params.idPedido).toString()
@@ -23,7 +45,6 @@ const ReprogramarEnvioScreen = (props) => {
     const [hora, setHora] = useState(horaEntrega)
 
     //console.log(JSON.stringify(props.route.params.idPedido))
-    console.log(fechaEntrega)
 
     const updateEnvio = () => {
         entityRef.doc(idPedido).update({
@@ -64,6 +85,14 @@ const ReprogramarEnvioScreen = (props) => {
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <TextInput style={ReprogramarEnvioStyles.inputDateTime} editable={isSelectedDateTime == true ? true : false} value={fecha} onChangeText={(text)=>setFecha(text)}></TextInput>
                 <TextInput style={ReprogramarEnvioStyles.inputDateTime} editable={isSelectedDateTime == true ? true : false} value={hora} onChangeText={(text)=>setHora(text)}></TextInput>
+            </View>
+            <View>
+                <View>
+                    <Text onPress={showMode}></Text>
+                </View>
+                {   
+                   show && (<DateTimePicker testID="dateTimePicker" value={date} mode={'date'} is24Hour={true} display="default" onChange={onChange}/>)
+                }               
             </View>
             <View style={{flexDirection: 'row'}}>
                 <MaterialIcons name="info" size={24} color="#FF4916" />
