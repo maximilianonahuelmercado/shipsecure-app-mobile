@@ -12,6 +12,7 @@ import ChatBotScreen from './screens/ChatBotScreen'
 import CrearEnvioScreen from './screens/CrearEnvioScreen';
 import EnvioCreadoScreen from './screens/EnvioCreadoScreen'
 import ReprogramarEnvioScreen from './screens/ReprogramarEnvioScreen'
+import QRScannerScreen from './screens/QRScannerScreen'
 
 const Stack = createStackNavigator()
 
@@ -21,6 +22,7 @@ const Stack = createStackNavigator()
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
+        <Stack.Screen name="QRScanner" component={QRScannerScreen}></Stack.Screen>
         <Stack.Screen name="ReprogramarEnvio" component={ReprogramarEnvioScreen}></Stack.Screen>
         <Stack.Screen name="CrearEnvio" component={CrearEnvioScreen}></Stack.Screen>
         <Stack.Screen name="ChatBot" component={ChatBotScreen}></Stack.Screen>
