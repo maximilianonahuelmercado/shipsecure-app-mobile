@@ -4,10 +4,16 @@ import { Avatar } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons';
 import HomeStyles from '../styles/HomeStyles';
 import { TouchableOpacity } from 'react-native';
+import * as WebBrowser from 'expo-web-browser'
 
 const HomeScreen = (props) => {
+
+   const _handleOpenChatBot = () => {
+        WebBrowser.openBrowserAsync('https://webchat.snatchbot.me/ec5dbd5775390aa38be0b77c9e84589305c6bf629cd5f1651eee66446b446559')
+    }
     
     return (
+        
         <ScrollView style={HomeStyles.container}>
             <View style={HomeStyles.avatar}>
                 <Avatar.Image size={150} source={require('../assets/usuario.jpg')}></Avatar.Image>
@@ -43,10 +49,11 @@ const HomeScreen = (props) => {
                 <Text style={HomeStyles.inputLabelChatBot}>¿Necesitas ayuda? ¡Comunícate con ShipBot!</Text>
             </View>
             <View style={HomeStyles.botonChatBot}>
-                <Button color="#08AFA5" title="Chatear" onPress={() => props.navigation.navigate('ChatBot')}></Button>
+                <Button color="#08AFA5" title="Chatear" onPress={_handleOpenChatBot}></Button>
             </View>
         </ScrollView>
     )
+
 }
 
 export default HomeScreen
