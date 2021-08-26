@@ -11,7 +11,7 @@ export default StyleSheet.create(
         avatar: {
             alignSelf: 'center',
             marginTop: 50,
-            marginBottom: 50
+            marginBottom: 30
         },
         saludo:{
             padding:0,
@@ -51,7 +51,8 @@ export default StyleSheet.create(
             overflow: 'hidden',
             width: 150,
             borderRadius: 30,
-            alignSelf: 'center'
+            alignSelf: 'center', 
+            marginBottom: 10
         },
         labelTextoSeguirEnvio:{
             padding: 10, 

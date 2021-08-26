@@ -5,8 +5,18 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeStyles from '../styles/HomeStyles';
 import { TouchableOpacity } from 'react-native';
 import * as WebBrowser from 'expo-web-browser'
+import { auth } from '../database/firebase';
 
 const HomeScreen = (props) => {
+
+    const signOut = () => {
+        auth.signOut().then(() => {
+            // Sign-out successful.
+            props.navigation.replace('Login')
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
 
    const _handleOpenChatBot = () => {
         WebBrowser.openBrowserAsync('https://webchat.snatchbot.me/ec5dbd5775390aa38be0b77c9e84589305c6bf629cd5f1651eee66446b446559')
@@ -50,6 +60,9 @@ const HomeScreen = (props) => {
             </View>
             <View style={HomeStyles.botonChatBot}>
                 <Button color="#08AFA5" title="Chatear" onPress={_handleOpenChatBot}></Button>
+            </View>
+            <View style={HomeStyles.botonChatBot}>
+                <Button color="#08AFA5" title="Cerrar Sesion" onPress={signOut}></Button>
             </View>
         </ScrollView>
     )

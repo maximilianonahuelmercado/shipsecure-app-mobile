@@ -62,7 +62,7 @@ const PedidoScreen = (props) => {
                     <Text style={PedidoStyles.inputLabelDatos}>{item.temperatura}</Text>
                 </View>
                 <View style={PedidoStyles.botonMapa}>
-                    <Button color="#08AFA5" title="Ver Mapa" onPress={() => props.navigation.navigate('SeguirPedido')}></Button>
+                    <Button color="#08AFA5" title="Ver Mapa" onPress={() => props.navigation.navigate('SeguirPedido', {idPedido: pedidoID})}></Button>
                 </View>
                 <View style={{paddingTop: 10, flexDirection: "row", justifyContent: 'space-between'}}>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>

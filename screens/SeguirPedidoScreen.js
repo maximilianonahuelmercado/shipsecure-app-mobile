@@ -5,8 +5,9 @@ import SeguirPedidoStyles from '../styles/SeguirPedidoStyles';
 import MapView, { Marker } from 'react-native-maps';
 import { db }  from '../database/firebase'
 
-const SeguirPedidoScreen = () => {
+const SeguirPedidoScreen = (props) => {
 
+  const idPedido = (props.route.params.idPedido).toString()
   const entityRef = db.collection('track');
 
   const [mapRegion, setmapRegion] = useState({
@@ -17,7 +18,7 @@ const SeguirPedidoScreen = () => {
   });
 
   useEffect(() => {
-    entityRef.doc('111111').onSnapshot(documentSnapshot => {
+    entityRef.doc(idPedido).onSnapshot(documentSnapshot => {
       const mr = {
         latitude: documentSnapshot.get("latitude"),
         longitude: documentSnapshot.get("longitude"), 

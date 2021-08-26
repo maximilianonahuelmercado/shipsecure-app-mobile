@@ -3,8 +3,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from '@react-navigation/drawer'
-import { Ionicons } from '@expo/vector-icons';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
+import { auth } from './database/firebase'
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegistroScreen';
 import HomeScreen from './screens/HomeScreen'
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import PedidoScreen from './screens/PedidoScreen'
@@ -19,6 +21,8 @@ const Stack = createStackNavigator()
  function MyStack(){
   return(
       <Stack.Navigator screenOptions={{headerShown: false } }>
+        <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
+        <Stack.Screen name="Registro" component={RegisterScreen}></Stack.Screen>
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
@@ -30,6 +34,18 @@ const Stack = createStackNavigator()
       </Stack.Navigator>
   )
 }
+
+
+/* drawerContent={props => <CustomDrawerContent {...props}></CustomDrawerContent>} esto va en NyDrawer como atributo de Drawer.Navigator
+function CustomDrawerContent(props){
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props}>
+      </DrawerItemList>
+      <DrawerItem label={()=><Text>Logout</Text>} onPress={()=>signOut()}></DrawerItem>
+    </DrawerContentScrollView>
+  )
+}*/
 
 const Drawer = createDrawerNavigator();
 
