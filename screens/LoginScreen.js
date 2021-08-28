@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { View, SafeAreaView, ScrollView, Text, Button, TextInput } from 'react-native'
 import { auth } from '../database/firebase';
 import LoginStyles from '../styles/LoginStyles';
-import { Ionicons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -27,6 +26,7 @@ const LoginScreen = ({ navigation }) => {
 
         return unsubscribe
     }, [])
+
     return (
         <SafeAreaView style={LoginStyles.container}> 
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -40,6 +40,7 @@ const LoginScreen = ({ navigation }) => {
                         style={LoginStyles.input}
                         value={email}
                         onChangeText={text => setEmail(text)}
+                        autoCapitalize='none'
                     >
                     
                     </TextInput>
@@ -53,6 +54,9 @@ const LoginScreen = ({ navigation }) => {
                         secureTextEntry
                     >
                     </TextInput>
+                    <View>
+                        <Text style={LoginStyles.forgotPassword} onPress={()=> navigation.navigate('ReestablecerPassword')}>¿Olvidaste tu contraseña?</Text>
+                    </View>
                     <View style={LoginStyles.botonIngresar}>
                         <Button color="#08AFA5" title="Ingresar" onPress={signIn} />
                     </View>

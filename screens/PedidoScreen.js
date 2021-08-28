@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Button} from 'react-native'
-import { db }  from '../database/firebase'
+import { db, auth }  from '../database/firebase'
 import PedidoStyles from '../styles/PedidoStyles'
 import { Ionicons , FontAwesome5 , FontAwesome } from '@expo/vector-icons';
 
@@ -14,7 +14,9 @@ const PedidoScreen = (props) => {
     useEffect(()=>{
         const subscriber = entityRef.doc(pedidoID).get().then(querySnapshot => {
             const pedidos = []
-            if(querySnapshot.data()){
+            console.log(auth.currentUser.email)
+            console.log(querySnapshot.data().email)
+            if(querySnapshot.data().email === auth?.currentUser?.email){
             pedidos.push({
                 ...querySnapshot.data(),
                 key: querySnapshot.id
@@ -24,6 +26,7 @@ const PedidoScreen = (props) => {
            else{
                //En caso de no encontrar el codigo vuelve a la pantalla UserHomeScreen hasta que ponga el id de envio valido
                props.navigation.navigate('ConsultarPedido')
+               alert('Codigo de envío inválido o no pertenece a ninguno de sus pedidos')
            }
         })
     }, [])

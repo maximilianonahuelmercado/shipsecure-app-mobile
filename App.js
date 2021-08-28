@@ -6,7 +6,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
 import { auth } from './database/firebase'
 import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegistroScreen';
+import ReestablecerPasswordScreen from './screens/ReestablecerPasswordScreen';
+import RegistroScreen from './screens/RegistroScreen';
 import HomeScreen from './screens/HomeScreen'
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import PedidoScreen from './screens/PedidoScreen'
@@ -22,7 +23,8 @@ const Stack = createStackNavigator()
   return(
       <Stack.Navigator screenOptions={{headerShown: false } }>
         <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
-        <Stack.Screen name="Registro" component={RegisterScreen}></Stack.Screen>
+        <Stack.Screen name="ReestablecerPassword" component={ReestablecerPasswordScreen}></Stack.Screen>
+        <Stack.Screen name="Registro" component={RegistroScreen}></Stack.Screen>
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, Button } from 'react-native';
-import { Avatar } from 'react-native-paper'
+import { Avatar } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import HomeStyles from '../styles/HomeStyles';
 import { TouchableOpacity } from 'react-native';
@@ -26,10 +26,10 @@ const HomeScreen = (props) => {
         
         <ScrollView style={HomeStyles.container}>
             <View style={HomeStyles.avatar}>
-                <Avatar.Image size={150} source={require('../assets/usuario.jpg')}></Avatar.Image>
+                <Avatar rounded size={150} source={{uri: auth?.currentUser?.photoURL}}></Avatar>
             </View>
             <View >
-                <Text style={HomeStyles.saludo}>¡Hola Usuario!</Text>
+                <Text style={HomeStyles.saludo}>¡Hola {auth?.currentUser?.displayName}!</Text>
             </View>
             <View >
                 <Text style={HomeStyles.pregunta}>¿Qué deseas hacer con tu ShipSecure?</Text>

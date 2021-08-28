@@ -10,6 +10,7 @@ export default StyleSheet.create(
             backgroundColor: '#003748'
         },
         tituloPrincipal:{
+            marginTop:50,
             padding: 20,
             fontSize: 35,
             fontWeight: 'bold',
@@ -18,7 +19,7 @@ export default StyleSheet.create(
         },
         toRegistro:{
             padding: 20,  
-            fontSize: 15,
+            fontSize: 20,
             fontWeight: 'bold',
             color: '#FF5733'
         },
@@ -49,9 +50,16 @@ export default StyleSheet.create(
         },
         texto:{
             padding: 20,  
-            fontSize: 15,
+            fontSize: 20,
             fontWeight: 'bold',
             color: '#FFF',
             alignSelf: 'center'
+        },
+        forgotPassword:{
+            fontSize: 15,
+            fontWeight: 'bold',
+            color: '#FF5733',
+            alignSelf: 'flex-end'
+
         }
     })
