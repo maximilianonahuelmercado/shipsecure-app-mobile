@@ -14,8 +14,6 @@ const PedidoScreen = (props) => {
     useEffect(()=>{
         const subscriber = entityRef.doc(pedidoID).get().then(querySnapshot => {
             const pedidos = []
-            console.log(auth.currentUser.email)
-            console.log(querySnapshot.data().email)
             if(querySnapshot.data().email === auth?.currentUser?.email){
             pedidos.push({
                 ...querySnapshot.data(),
@@ -69,10 +67,10 @@ const PedidoScreen = (props) => {
                 </View>
                 <View style={{paddingTop: 10, flexDirection: "row", justifyContent: 'space-between'}}>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate("Home")}></Ionicons>
+                    <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {idPedido: pedidoID})}></Ionicons>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <FontAwesome5 name="unlock-alt" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner")}></FontAwesome5>
+                    <FontAwesome5 name="unlock-alt" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></FontAwesome5>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
                     <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega})}></FontAwesome>

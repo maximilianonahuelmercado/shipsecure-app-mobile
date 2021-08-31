@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import QRScannerStyles from '../styles/QRScannerStyles';
-import { db }  from '../database/firebase'
+import { db, auth }  from '../database/firebase'
 
-export default function App() {
+const QRScannerScreen = (props) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const entityRef = db.collection('envios');
+  const idPedido = (props.route.params.idPedido).toString()
 
   useEffect(() => {
     (async () => {
@@ -19,11 +20,13 @@ export default function App() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     //alert(`Se escaneo ${type} con el siguiente dato: ${data}`);
-    entityRef.where('Codigo', '==', data).get().then(querySnapshot => {
-      console.log("Codigo OK")
-      querySnapshot.forEach(documentSnapshot => {
+    entityRef.doc(idPedido).get().then(querySnapshot => {
+      if(querySnapshot.data().codigoCaja === data && querySnapshot.data().email === auth?.currentUser?.email ){
         alert(`el codigo es: ${data}`)
-      })
+      }
+      else{
+        alert('El codigo no corresponde al pedido asociado')
+      }
     })
   };
 
@@ -44,3 +47,5 @@ export default function App() {
     </View>
   );
 }
+
+export default QRScannerScreen

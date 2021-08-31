@@ -4,13 +4,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
-import { auth } from './database/firebase'
 import LoginScreen from './screens/LoginScreen';
 import ReestablecerPasswordScreen from './screens/ReestablecerPasswordScreen';
 import RegistroScreen from './screens/RegistroScreen';
 import HomeScreen from './screens/HomeScreen'
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import PedidoScreen from './screens/PedidoScreen'
+import ChatScreen from './screens/ChatScreen';
 import SeguirPedidoScreen from './screens/SeguirPedidoScreen'
 import CrearEnvioScreen from './screens/CrearEnvioScreen';
 import EnvioCreadoScreen from './screens/EnvioCreadoScreen'
@@ -28,6 +28,7 @@ const Stack = createStackNavigator()
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
+        <Stack.Screen name="Chat" component={ChatScreen}></Stack.Screen>
         <Stack.Screen name="SeguirPedido" component={SeguirPedidoScreen}></Stack.Screen>
         <Stack.Screen name="QRScanner" component={QRScannerScreen}></Stack.Screen>
         <Stack.Screen name="ReprogramarEnvio" component={ReprogramarEnvioScreen}></Stack.Screen>
