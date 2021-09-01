@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Button } from 'react-native';
+import { View, Text, ScrollView, Button, SafeAreaView } from 'react-native';
 import { Avatar } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import HomeStyles from '../styles/HomeStyles';
@@ -23,8 +23,8 @@ const HomeScreen = (props) => {
     }
     
     return (
-        
-        <ScrollView style={HomeStyles.container}>
+     <SafeAreaView style={HomeStyles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
             <View style={HomeStyles.avatar}>
                 <Avatar rounded size={150} source={{uri: auth?.currentUser?.photoURL}}></Avatar>
             </View>
@@ -65,6 +65,7 @@ const HomeScreen = (props) => {
                 <Button color="#08AFA5" title="Cerrar Sesion" onPress={signOut}></Button>
             </View>
         </ScrollView>
+    </SafeAreaView>
     )
 
 }

@@ -4,8 +4,7 @@ export default StyleSheet.create(
     {
         container: {
             flex: 1,
-            padding: 50,
-            paddingTop:80,
+            padding: '5%',
             backgroundColor: '#003748'
         },
         avatar: {

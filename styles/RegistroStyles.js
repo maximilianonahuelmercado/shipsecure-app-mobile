@@ -37,7 +37,7 @@ export default StyleSheet.create(
             borderRadius: 25,
             marginBottom: 15,
             marginRight: 30,
-            width: 360
+            width: '100%'
         },
         botonRegistrarse:{   
             marginTop: 40,

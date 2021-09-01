@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Button,TextInput, SafeAreaView, ScrollView, Text } from 'react-native'
-import { auth, stg} from '../database/firebase';
+import { db, auth} from '../database/firebase';
 import RegistroStyles from '../styles/RegistroStyles'
 
 const RegistroScreen = ({ navigation }) => {
@@ -10,6 +10,8 @@ const RegistroScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
     const [imageURL, setImageUrl] = useState('');
+
+    const entityRef = db.collection('usuarios')
 
     const register = () => {
 
@@ -28,7 +30,14 @@ const RegistroScreen = ({ navigation }) => {
                         displayName: name,
                         photoURL: imageURL ? imageURL : "https://www.trackergps.com/canvas/images/icons/avatar.jpg"
                     }).then(function () {
-                        // Update successful.
+                        // Update successful. Persistimos los datos del usuario en firebase
+                        entityRef.add({
+                            nombre: name,
+                            apellido: surname,
+                            email: email,
+                            fechaNacimiento: ''
+                        })
+
                     }).catch(function (error) {
                         // An error happened.
                     });
