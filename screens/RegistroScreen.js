@@ -12,9 +12,9 @@ const RegistroScreen = ({ navigation }) => {
     const [imageURL, setImageUrl] = useState('');
 
     const entityRef = db.collection('usuarios')
+    const idUsuario = (100000 + Math.floor(Math.random() * 900000)).toString()
 
     const register = () => {
-
         if(email === '' || name ==='' || surname === '' || password === ''  || repassword === '') {
             alert('Todos los campos son obligatorios')
         }
@@ -31,17 +31,16 @@ const RegistroScreen = ({ navigation }) => {
                         photoURL: imageURL ? imageURL : "https://www.trackergps.com/canvas/images/icons/avatar.jpg"
                     }).then(function () {
                         // Update successful. Persistimos los datos del usuario en firebase
-                        entityRef.add({
+                        entityRef.doc(idUsuario).set({
+                            _id: idUsuario,
                             nombre: name,
                             apellido: surname,
                             email: email,
                             fechaNacimiento: ''
                         })
-
                     }).catch(function (error) {
                         // An error happened.
                     });
-                    // ...
                     auth.signOut().then(() => {
                         // Sign-out successful.
                         navigation.replace('Login')
@@ -51,7 +50,6 @@ const RegistroScreen = ({ navigation }) => {
                     });
                 })
                 .catch((error) => {
-
                     var errorMessage = error.message;
                     alert(errorMessage)
                 });
@@ -110,7 +108,7 @@ const RegistroScreen = ({ navigation }) => {
                         secureTextEntry
                     />
                 <View style={RegistroStyles.botonRegistrarse}>
-                    <Button color="#08AFA5" title="Registrame" onPress={register} />
+                    <Button color="#08AFA5" title="Registrarme" onPress={register} />
                 </View>
         </ScrollView>
     </SafeAreaView>

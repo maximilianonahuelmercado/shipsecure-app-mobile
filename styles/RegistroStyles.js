@@ -40,10 +40,9 @@ export default StyleSheet.create(
             width: '100%'
         },
         botonRegistrarse:{   
-            marginTop: 40,
-            marginBottom: 40,
+            marginTop: 20,
             overflow: 'hidden',
-            width: 200,
+            width: '50%',
             borderRadius: 30,
             alignSelf: 'center', 
         },

@@ -4,9 +4,7 @@ export default StyleSheet.create(
     {
         container: {
             flex: 1,
-            padding: 25,
-            paddingBottom: 10,
-            paddingTop:100,
+            padding: '5%',
             backgroundColor: '#003748'
         },
         avatar: {
@@ -14,6 +12,13 @@ export default StyleSheet.create(
             marginTop: 50,
             marginBottom: 30
         },
+        textoFoto:{
+            fontSize:12,
+            marginBottom: '20%',
+            fontWeight: 'bold',
+            alignSelf: 'center',
+            color: '#FF5733'
+        }, 
         label: {
             flex: 1,
             padding: 10,
@@ -32,10 +37,9 @@ export default StyleSheet.create(
             width: '100%'
         },
         botonActualizar:{   
-            marginTop: 40,
-            marginBottom: 40,
+            marginTop: 20,
             overflow: 'hidden',
-            width: 200,
+            width: '50%',
             borderRadius: 30,
             alignSelf: 'center', 
         },
