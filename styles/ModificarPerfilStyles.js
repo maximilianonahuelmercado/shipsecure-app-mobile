@@ -12,9 +12,8 @@ export default StyleSheet.create(
             marginTop: 50,
             marginBottom: 30
         },
-        textoFoto:{
-            fontSize:12,
-            marginBottom: '20%',
+        titulo:{
+            fontSize:15,
             fontWeight: 'bold',
             alignSelf: 'center',
             color: '#FF5733'
@@ -31,6 +30,17 @@ export default StyleSheet.create(
             backgroundColor:'#2E4B5B',
             borderStyle: 'solid',
             color: '#FFF',
+            borderRadius: 25,
+            marginBottom: 15,
+            marginRight: 30,
+            width: '100%'
+        },
+        inputBlocked: {
+            alignSelf: 'flex-start',
+            padding: 5,
+            backgroundColor:'#2E4B5B',
+            borderStyle: 'solid',
+            color: '#827B7B',
             borderRadius: 25,
             marginBottom: 15,
             marginRight: 30,

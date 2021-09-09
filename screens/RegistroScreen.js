@@ -28,7 +28,7 @@ const RegistroScreen = ({ navigation }) => {
                     var user = userCredential.user;
                     user.updateProfile({
                         displayName: name,
-                        photoURL: imageURL ? imageURL : "https://www.trackergps.com/canvas/images/icons/avatar.jpg"
+                        photoURL: "https://i.ibb.co/jGwMwn4/Microsoft-Teams-image.png"
                     }).then(function () {
                         // Update successful. Persistimos los datos del usuario en firebase
                         entityRef.doc(idUsuario).set({

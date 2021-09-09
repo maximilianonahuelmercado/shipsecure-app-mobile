@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import ReestablecerPasswordScreen from './screens/ReestablecerPasswordScreen';
 import RegistroScreen from './screens/RegistroScreen';
 import HomeScreen from './screens/HomeScreen'
+import BeneficiosScreen from './screens/BeneficiosScreen';
 import ModificarPerfilScreen from './screens/ModifcarPerfilScreen';
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import PedidoScreen from './screens/PedidoScreen'
@@ -17,6 +18,7 @@ import CrearEnvioScreen from './screens/CrearEnvioScreen';
 import EnvioCreadoScreen from './screens/EnvioCreadoScreen'
 import ReprogramarEnvioScreen from './screens/ReprogramarEnvioScreen'
 import QRScannerScreen from './screens/QRScannerScreen'
+
 
 const Stack = createStackNavigator()
 
@@ -34,23 +36,11 @@ const Stack = createStackNavigator()
         <Stack.Screen name="QRScanner" component={QRScannerScreen}></Stack.Screen>
         <Stack.Screen name="ReprogramarEnvio" component={ReprogramarEnvioScreen}></Stack.Screen>
         <Stack.Screen name="CrearEnvio" component={CrearEnvioScreen}></Stack.Screen>
-        <Stack.Screen name="EnvioCreado" component={EnvioCreadoScreen}></Stack.Screen>
-       
+        <Stack.Screen name="EnvioCreado" component={EnvioCreadoScreen}></Stack.Screen>     
       </Stack.Navigator>
   )
 }
 
-
-/* drawerContent={props => <CustomDrawerContent {...props}></CustomDrawerContent>} esto va en NyDrawer como atributo de Drawer.Navigator
-function CustomDrawerContent(props){
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props}>
-      </DrawerItemList>
-      <DrawerItem label={()=><Text>Logout</Text>} onPress={()=>signOut()}></DrawerItem>
-    </DrawerContentScrollView>
-  )
-}*/
 
 const Drawer = createDrawerNavigator();
 
@@ -58,7 +48,8 @@ function MyDrawer(){
   return(
     <Drawer.Navigator initialRouteName="Home" drawerStyle={{backgroundColor: "#08AFA5", }} drawerContentOptions={{activeTintColor: '#000',activeBackgroundColor: "rgba(255,255,255,0.5)"} }>
        <Drawer.Screen name="Home" component={MyStack}></Drawer.Screen>
-       <Drawer.Screen name="ModificarPerfil" component={ModificarPerfilScreen}></Drawer.Screen>
+       <Drawer.Screen name="Editar Perfil" component={ModificarPerfilScreen}></Drawer.Screen>
+       <Drawer.Screen name="Beneficios" component={BeneficiosScreen}></Drawer.Screen>
     </Drawer.Navigator>
   )
 
