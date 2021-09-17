@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { View, SafeAreaView, ScrollView, Text, Button, TextInput } from 'react-native'
 import { auth } from '../database/firebase';
 import LoginStyles from '../styles/LoginStyles';
+import { Ionicons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [hidePass, setHidePass] = useState(true);
+
     const signIn = () => {
         auth.signInWithEmailAndPassword(email, password)
             .catch((error) => {
@@ -47,13 +50,16 @@ const LoginScreen = ({ navigation }) => {
                     <View>
                         <Text style={LoginStyles.label}>Password</Text>
                     </View>
-                    <TextInput
-                        style={LoginStyles.input}
-                        value={password}
-                        onChangeText={text => setPassword(text)}
-                        secureTextEntry
-                    >
-                    </TextInput>
+                    <View style={LoginStyles.inputContainer}>
+                        <TextInput
+                            style={LoginStyles.input}
+                            value={password}
+                            onChangeText={text => setPassword(text)}
+                            secureTextEntry={hidePass ? true : false}
+                        />
+                        <Ionicons name={hidePass ? 'eye' : 'eye-off-outline'} size={30} style={LoginStyles.icon} onPress={() => setHidePass(!hidePass)}/>
+                    </View>
+
                     <View>
                         <Text style={LoginStyles.forgotPassword} onPress={()=> navigation.navigate('ReestablecerPassword')}>¿Olvidaste tu contraseña?</Text>
                     </View>

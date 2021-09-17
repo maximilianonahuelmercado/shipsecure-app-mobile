@@ -1,0 +1,7 @@
+export const PRIMER_PREMIO = "5% de descuento en tu envío con ShipSecure"
+export const SEGUNDO_PREMIO = "10% de descuento en tu envío con ShipSecure"
+export const TERCER_PREMIO = "15% de descuento en tu envío con ShipSecure"
+export const CUARTO_PREMIO = "20% de descuento en tu envío con ShipSecure"
+export const QUINTO_PREMIO = "30% de descuento en tu envío con ShipSecure"
+export const SEXTO_PREMIO = "40% de descuento en tu envío con ShipSecure"
+export const SEPTIMO_PREMIO = "50% de descuento en tu envío con ShipSecure"

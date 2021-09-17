@@ -63,7 +63,7 @@ const HomeScreen = (props) => {
                 <Button color="#08AFA5" title="Chatear" onPress={_handleOpenChatBot}></Button>
             </View>
             <View style={HomeStyles.botonChatBot}>
-                <Button color="#08AFA5" title="Cerrar Sesion" onPress={()=>props.navigation.navigate("Beneficios")}></Button>
+                <Button color="#08AFA5" title="Cerrar Sesion" onPress={signOut}></Button>
             </View>
         </ScrollView>
     </SafeAreaView>

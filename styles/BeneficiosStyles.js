@@ -4,18 +4,27 @@ export default StyleSheet.create(
     {
         container: {
             flex: 1,
-            padding: 50,
+            padding: '5%',
             backgroundColor: '#003748'
+        },
+        progressBar:{
+            marginTop: '20%',
+            alignSelf: 'center'
         },
         titulo: {
             color:'#FFF',
             fontSize: 25,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            marginTop: '4%',
+            marginBottom: '4%'
         },
         texto: {
+            alignSelf: 'center',
             color:'#BCBABA',
-            fontSize: 12,
-            fontWeight: 'bold'
+            fontSize: 15,
+            fontWeight: 'bold',
+            marginBottom: '5%',
+            marginTop: '5%'
         },
         textoBA:{
             color:'#FFF',
@@ -24,7 +33,7 @@ export default StyleSheet.create(
         },
         puntos:{
             color:'#FF5733',
-            fontSize: 25,
+            fontSize: 40,
             fontWeight: 'bold',
             alignSelf: 'center'
         }

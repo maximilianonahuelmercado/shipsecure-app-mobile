@@ -29,16 +29,23 @@ export default StyleSheet.create(
             color: '#08AFA5',
             fontWeight: 'bold',    
         },
+        inputContainer:{
+            justifyContent: 'center'
+        },
         input: {
-            alignSelf: 'flex-start',
-            padding: 5,
             backgroundColor:'#2E4B5B',
+            padding: 10,
             borderStyle: 'solid',
             color: '#FFF',
             borderRadius: 25,
             marginBottom: 15,
             marginRight: 30,
-            width: '100%'
+            width: '100%',
+        },
+        icon: {
+            position: 'absolute',
+            right: 15,
+            color: '#FFF'
         },
         botonIngresar:{   
             marginTop: 40,
