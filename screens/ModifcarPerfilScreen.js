@@ -1,115 +1,117 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View,TextInput, SafeAreaView, ScrollView, Text, Button, Alert } from 'react-native'
 import {CheckBox} from 'react-native-elements'
 import { db, auth} from '../database/firebase';
-import * as firebase from 'firebase'
+import { Ionicons } from '@expo/vector-icons';
 import ModificarPerfilStyles from '../styles/ModificarPerfilStyles'
 
 
-const ModificarPerfilScreen = (props) => {
+const ModificarPerfilScreen = ({navigation}) => {
 
-    const [email, setEmail] = useState(auth?.currentUser?.email);
-    const [name, setName] = useState(auth?.currentUser?.displayName);
-    const [surname, setSurname] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('')
-    const [password, setPassword] = useState('');
+    const [usuario, setUsuario] = useState([{}])
+    const [alias, setAlias] = useState("")
+    const [hidePass, setHidePass] = useState(true);
     const [repassword, setRepassword] = useState('');
     const [confRepassword, setConfRepassword] = useState('');
     const [isSelected, setSelection] = useState(false)
 
-    const entityRef = db.collection('usuarios')
+    const entityRef = db.collection("usuarios")
     
 
-    const updateUser = () => {
-        entityRef.where('email', '==', auth?.currentUser?.email).get().then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
-                entityRef.doc(documentSnapshot.data()._id).update({
-                    nombre: name,
-                    apellido: surname,
-                    fechaNacimiento: fechaNacimiento,
-                    email: email
-                })
-            })
-            
-        })
-        console.log(password, email, repassword)
-        alert('Datos Actualizados, por favor vuelva a ingresar a la aplicación')
+
+    //Cambiar el displayName del auth user a un ALIAS en firestore!
+
+
+   const updateUser = () =>  {
+        if(isSelected == true){
+            if(repassword === confRepassword){
+                auth.currentUser.updatePassword(repassword).then(function (){
+                    auth.signOut().then(()=>{  
+                        navigation.navigate("Home")
+                        alert('La contraseña ha sido actualizada por favor volver a ingresar a la aplicacion')
+                    })
+                }).catch((error) => {
+                    alert(error)
+
+                } )
+            }
+            else{
+                alert('Las passwords no coinciden!')
+            }
+        }     
+        if(alias){
+            console.log(usuario._id)
+            entityRef.doc(usuario._id).update({alias: alias}).then(()=>{console.log('Se actualizo el Alias')})
+        }
+        navigation.navigate("Home")
     }
+
+    useEffect (() => {
+        entityRef.where('email', '==', auth?.currentUser?.email).get().then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    const users = {
+                        ...documentSnapshot.data(),
+                        key: documentSnapshot.id
+                    }
+                    setUsuario(users)
+                })         
+            })  
+    }, [])
 
     return (
             <SafeAreaView style={ModificarPerfilStyles.container}> 
                 <ScrollView showsVerticalScrollIndicator={false}>
-                        <View style={{flexDirection: 'row', justifyContent: 'flex-start', marginTop:'10%'}}>
-                            <Text style={ModificarPerfilStyles.titulo}>¿Deseas modificar tus datos?</Text>
-                            <CheckBox uncheckedColor='#08AFA5' checkedColor='#FF5733' checked={isSelected} onPress={()=>setSelection(!isSelected)}></CheckBox>
-                        </View>
                         <View>
-                            <Text style={ModificarPerfilStyles.label}>Nombres</Text>
+                            <Text style={ModificarPerfilStyles.label}>Nombre</Text>
                         </View>
-                        <TextInput
-                                style={isSelected == true ? ModificarPerfilStyles.input : ModificarPerfilStyles.inputBlocked}
-                                value={name}
-                                onChangeText={text => setName(text)}
-                                editable={isSelected == true ? true : false}
-                        />
+                        <Text style={ModificarPerfilStyles.texto}>{usuario.nombre}</Text>
                         <View>
                             <Text style={ModificarPerfilStyles.label}>Apellidos</Text>
                         </View>
-                        <TextInput
-                                style={isSelected == true ? ModificarPerfilStyles.input : ModificarPerfilStyles.inputBlocked}
-                                value={surname}
-                                onChangeText={text => setSurname(text)}
-                                editable={isSelected == true ? true : false}
-                        />
-                        <View>
-                            <Text style={ModificarPerfilStyles.label}>Fecha de nacimiento</Text>
-                        </View>
-                        <TextInput
-                                style={isSelected == true ? ModificarPerfilStyles.input : ModificarPerfilStyles.inputBlocked}
-                                value={fechaNacimiento}
-                                onChangeText={text => setFechaNacimiento(text)}
-                                editable={isSelected == true ? true : false}
-                        />
+                        <Text style={ModificarPerfilStyles.texto}>{usuario.apellido}</Text>
                         <View>
                             <Text style={ModificarPerfilStyles.label}>Email</Text>
                         </View>
-                            <TextInput
-                                style={isSelected == true ? ModificarPerfilStyles.input : ModificarPerfilStyles.inputBlocked}
-                                value={email}
-                                onChangeText={text => setEmail(text)}
-                                editable={isSelected == true ? true : false}
-                                autoCapitalize='none'
-                            />  
+                        <Text style={ModificarPerfilStyles.texto}>{usuario.email}</Text>
                         <View>
-                            <Text style={ModificarPerfilStyles.label}>Contraseña Actual</Text>
+                            <Text style={ModificarPerfilStyles.label}>Alias</Text>
                         </View>
                             <TextInput
-                                style={isSelected == true ? ModificarPerfilStyles.input : ModificarPerfilStyles.inputBlocked}
-                                value={password}
-                                onChangeText={text => setPassword(text)}
-                                editable={isSelected == true ? true : false}
-                                secureTextEntry
+                                style={ModificarPerfilStyles.input}
+                                value={alias}
+                                onChangeText={text => setAlias(text)}
                             />
+                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                            <Text style={ModificarPerfilStyles.titulo}>¿Deseas modificar tu contraseña?</Text>
+                            <CheckBox uncheckedColor='#08AFA5' checkedColor='#FF5733' checked={isSelected} onPress={()=>setSelection(!isSelected)}></CheckBox>
+                        </View>
                         <View>
                             <Text style={ModificarPerfilStyles.label}>Nueva Contraseña</Text>
                         </View>
+                        <View style={ModificarPerfilStyles.inputContainer}>
                             <TextInput
                                 style={isSelected == true ? ModificarPerfilStyles.input : ModificarPerfilStyles.inputBlocked}
                                 value={repassword}
                                 onChangeText={text => setRepassword(text)}
                                 editable={isSelected == true ? true : false}
-                                secureTextEntry
+                                secureTextEntry={hidePass ? true : false}
                             />
-                                                    <View>
+                            <Ionicons name={hidePass ? 'eye' : 'eye-off-outline'} size={30} style={ModificarPerfilStyles.icon} onPress={() => setHidePass(!hidePass)}/>
+                        </View>
+                        <View>
                             <Text style={ModificarPerfilStyles.label}>Confirmar Nueva Contraseña</Text>
                         </View>
+                        <View style={ModificarPerfilStyles.inputContainer}>
                             <TextInput
                                 style={isSelected == true ? ModificarPerfilStyles.input : ModificarPerfilStyles.inputBlocked}
                                 value={confRepassword}
                                 onChangeText={text => setConfRepassword(text)}
                                 editable={isSelected == true ? true : false}
-                                secureTextEntry
+                                secureTextEntry={hidePass ? true : false}
+
                             />
+                            <Ionicons name={hidePass ? 'eye' : 'eye-off-outline'} size={30} style={ModificarPerfilStyles.icon} onPress={() => setHidePass(!hidePass)}/>
+                        </View>
                         <View style={ModificarPerfilStyles.botonActualizar}>
                             <Button color="#08AFA5" title="Actualizar"
                              onPress={updateUser}></Button>

@@ -1,15 +1,41 @@
 import React, { useState } from 'react'
-import { View, Button,TextInput, SafeAreaView, ScrollView, Text } from 'react-native'
+import { View, Button,TextInput, SafeAreaView, ScrollView, Text, Platform } from 'react-native'
 import { db, auth} from '../database/firebase';
+import { Ionicons } from '@expo/vector-icons'; 
+import DateTimePicker from '@react-native-community/datetimepicker'
 import RegistroStyles from '../styles/RegistroStyles'
 
 const RegistroScreen = ({ navigation }) => {
+
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
-    const [imageURL, setImageUrl] = useState('');
+    const [hidePass, setHidePass] = useState(true);
+    const [hideRePass, setHideRePass] = useState(true);
+
+    const [date, setDate] = useState(new Date(Date.now()));
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+
+
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+      };
+    
+      const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+      };
+    
+      const showDatepicker = () => {
+        showMode('date');
+      };
+    
 
     const entityRef = db.collection('usuarios')
     const idUsuario = (100000 + Math.floor(Math.random() * 900000)).toString()
@@ -36,24 +62,28 @@ const RegistroScreen = ({ navigation }) => {
                             nombre: name,
                             apellido: surname,
                             email: email,
-                            fechaNacimiento: ''
+                            fechaNacimiento: date.toLocaleDateString('es-AR'),
+                            alias:'',
+                            puntos:0
                         })
                     }).catch(function (error) {
                         // An error happened.
-                    });
+                    });/*
+                    console.log(auth)
                     auth.signOut().then(() => {
                         // Sign-out successful.
                         navigation.replace('Login')
                         alert('Cuenta creada con éxito, ingresa con tus datos')
                     }).catch((error) => {
                         // An error happened.
-                    });
+                        console.log(auth.currentUser)
+                        console.log(error)
+                    });*/
                 })
                 .catch((error) => {
                     var errorMessage = error.message;
                     alert(errorMessage)
                 });
-
             }
             else{
                 alert('Las passwords no coinciden')
@@ -81,6 +111,23 @@ const RegistroScreen = ({ navigation }) => {
                         onChangeText={text => setSurname(text)}
                 />
                 <View>
+                    <Text style={RegistroStyles.label}>Fecha de Nacimiento</Text>
+                </View>
+                <View style={{flexDirection:'row'}}>
+                    <Ionicons name="calendar-outline" size={25} onPress={showDatepicker} color="#FF5733" style={RegistroStyles.icono}></Ionicons>
+                    <Text style={RegistroStyles.fecha}>{date.toLocaleDateString('es-AR')}</Text>
+                    {show && (
+                        <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={onChange}
+                        />
+                    )}
+                </View>
+                <View>
                     <Text style={RegistroStyles.label}>Email</Text>
                 </View>
                     <TextInput
@@ -92,21 +139,27 @@ const RegistroScreen = ({ navigation }) => {
                 <View>
                     <Text style={RegistroStyles.label}>Contraseña</Text>
                 </View>
+                <View style={RegistroStyles.inputContainer}> 
                     <TextInput
                         style={RegistroStyles.input}
                         value={password}
                         onChangeText={text => setPassword(text)}
-                        secureTextEntry
+                        secureTextEntry={hidePass ? true : false}
                     />
-                                <View>
+                    <Ionicons name={hidePass ? 'eye' : 'eye-off-outline'} size={30} style={RegistroStyles.icon} onPress={() => setHidePass(!hidePass)}/>
+                </View>
+                <View>
                     <Text style={RegistroStyles.label}>Confirmar Contraseña</Text>
                 </View>
+                <View style={RegistroStyles.inputContainer}> 
                     <TextInput
                         style={RegistroStyles.input}
                         value={repassword}
                         onChangeText={text => setRepassword(text)}
-                        secureTextEntry
+                        secureTextEntry={hideRePass ? true : false}
                     />
+                    <Ionicons name={hideRePass ? 'eye' : 'eye-off-outline'} size={30} style={RegistroStyles.icon} onPress={() => setHideRePass(!hideRePass)}/>
+                </View>
                 <View style={RegistroStyles.botonRegistrarse}>
                     <Button color="#08AFA5" title="Registrarme" onPress={register} />
                 </View>

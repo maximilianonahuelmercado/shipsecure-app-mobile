@@ -45,6 +45,7 @@ export default StyleSheet.create(
         icon: {
             position: 'absolute',
             right: 15,
+            marginBottom: '5%',
             color: '#FFF'
         },
         botonIngresar:{   

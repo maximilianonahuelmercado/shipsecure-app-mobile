@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { color } from "react-native-elements/dist/helpers";
 
 export default StyleSheet.create(
     {
@@ -52,5 +53,23 @@ export default StyleSheet.create(
             fontWeight: 'bold',
             color: '#FFF',
             alignSelf: 'center'
+        },
+        icono:{
+            paddingLeft: 5
+        },
+        fecha:{
+            marginLeft: '4%',
+            color: '#FFF',
+            fontSize: 20,
+            fontWeight: 'bold'
+        },
+        icon: {
+            position: 'absolute',
+            right: 15,
+            marginBottom: '5%',
+            color: '#FFF'
+        },
+        inputContainer:{
+            justifyContent:'center'
         }
     })

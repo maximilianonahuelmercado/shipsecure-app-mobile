@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Button} from 'react-native'
-import { db, auth }  from '../database/firebase'
+import { rt, db, auth }  from '../database/firebase'
 import PedidoStyles from '../styles/PedidoStyles'
 import { Ionicons , FontAwesome5 , FontAwesome } from '@expo/vector-icons';
 
@@ -8,10 +8,23 @@ const PedidoScreen = (props) => {
 
 
     const [pedido, setPedido] = useState([])
+    const [sensor, setSensor] = useState({})
     const pedidoID = (props.route.params.nroPedido).toString()
     const entityRef = db.collection('envios')
 
     useEffect(()=>{
+
+        rt.ref('/sensores').on('value', snapshot => {
+            const sensores = {
+              peso: snapshot.val().peso,
+              temperatura: snapshot.val().temperatura, 
+            }
+            setSensor(sensores)
+            console.log(sensores)
+          })
+          
+          console.log(sensor)
+
         const subscriber = entityRef.doc(pedidoID).get().then(querySnapshot => {
             const pedidos = []
             if(querySnapshot.data().email === auth?.currentUser?.email){
@@ -56,11 +69,11 @@ const PedidoScreen = (props) => {
                 </View>
                 <View>
                     <Text style={PedidoStyles.inputLabelTitulo}>Peso</Text>
-                    <Text style={PedidoStyles.inputLabelDatos}>{item.peso}</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.peso}</Text>
                 </View>
                 <View>
                     <Text style={PedidoStyles.inputLabelTitulo}>Temperatura</Text>
-                    <Text style={PedidoStyles.inputLabelDatos}>{item.temperatura}</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.temperatura}</Text>
                 </View>
                 <View style={PedidoStyles.botonMapa}>
                     <Button color="#08AFA5" title="Ver Mapa" onPress={() => props.navigation.navigate('SeguirPedido', {idPedido: pedidoID})}></Button>
@@ -70,7 +83,7 @@ const PedidoScreen = (props) => {
                     <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {idPedido: pedidoID})}></Ionicons>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <FontAwesome5 name="unlock-alt" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></FontAwesome5>
+                    <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></Ionicons>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
                     <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega})}></FontAwesome>

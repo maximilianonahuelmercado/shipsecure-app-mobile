@@ -22,12 +22,10 @@ import QRScannerScreen from './screens/QRScannerScreen'
 
 const Stack = createStackNavigator()
 
- function MyStack(){
+
+ function MyHomeStack(){
   return(
-      <Stack.Navigator screenOptions={{headerShown: false } }>
-        <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
-        <Stack.Screen name="ReestablecerPassword" component={ReestablecerPasswordScreen}></Stack.Screen>
-        <Stack.Screen name="Registro" component={RegistroScreen}></Stack.Screen>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
@@ -36,7 +34,7 @@ const Stack = createStackNavigator()
         <Stack.Screen name="QRScanner" component={QRScannerScreen}></Stack.Screen>
         <Stack.Screen name="ReprogramarEnvio" component={ReprogramarEnvioScreen}></Stack.Screen>
         <Stack.Screen name="CrearEnvio" component={CrearEnvioScreen}></Stack.Screen>
-        <Stack.Screen name="EnvioCreado" component={EnvioCreadoScreen}></Stack.Screen>     
+        <Stack.Screen name="EnvioCreado" component={EnvioCreadoScreen}></Stack.Screen> 
       </Stack.Navigator>
   )
 }
@@ -44,10 +42,11 @@ const Stack = createStackNavigator()
 
 const Drawer = createDrawerNavigator();
 
+
 function MyDrawer(){
   return(
-    <Drawer.Navigator initialRouteName="Home" drawerStyle={{backgroundColor: "#08AFA5", }} drawerContentOptions={{activeTintColor: '#000',activeBackgroundColor: "rgba(255,255,255,0.5)"} }>
-       <Drawer.Screen name="Home" component={MyStack}></Drawer.Screen>
+    <Drawer.Navigator initialRouteName="Home" drawerStyle={{backgroundColor: "#08AFA5" }} drawerContentOptions={{activeTintColor: '#000',activeBackgroundColor: "rgba(255,255,255,0.5)"} }>
+       <Drawer.Screen name="Home" component={MyHomeStack}></Drawer.Screen>
        <Drawer.Screen name="Editar Perfil" component={ModificarPerfilScreen}></Drawer.Screen>
        <Drawer.Screen name="Beneficios" component={BeneficiosScreen}></Drawer.Screen>
     </Drawer.Navigator>
@@ -58,8 +57,13 @@ function MyDrawer(){
 export default function App() {
   return (
       <NavigationContainer>
-        <MyDrawer></MyDrawer>
-      </NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Login" component={LoginScreen}/>
+          <Stack.Screen name="ReestablecerPassword" component={ReestablecerPasswordScreen}/>
+          <Stack.Screen name="Registro" component={RegistroScreen}/>
+          <Stack.Screen name="Home" component={MyDrawer}/>
+        </Stack.Navigator>
+      </NavigationContainer> 
   );
 }
 

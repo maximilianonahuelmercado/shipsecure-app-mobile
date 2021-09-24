@@ -16,7 +16,8 @@ export default StyleSheet.create(
             fontSize:15,
             fontWeight: 'bold',
             alignSelf: 'center',
-            color: '#FF5733'
+            color: '#FF5733',
+            alignSelf: 'center'
         }, 
         label: {
             flex: 1,
@@ -53,11 +54,19 @@ export default StyleSheet.create(
             borderRadius: 30,
             alignSelf: 'center', 
         },
-        texto:{
-            padding: 20,  
-            fontSize: 15,
+        texto:{  
+            paddingLeft: 10,
             fontWeight: 'bold',
             color: '#FFF',
-            alignSelf: 'center'
+            alignSelf: 'flex-start'
+        },
+        inputContainer:{
+            justifyContent: 'center'
+        },
+        icon: {
+            position: 'absolute',
+            right: 15,
+            marginBottom: '5%',
+            color: '#FFF'
         }
     })

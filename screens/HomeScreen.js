@@ -1,20 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Button, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, Button, SafeAreaView, EventEmitter } from 'react-native';
 import { Avatar } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import HomeStyles from '../styles/HomeStyles';
 import { TouchableOpacity } from 'react-native';
 import * as WebBrowser from 'expo-web-browser'
 import { db, auth } from '../database/firebase';
+import { useIsFocused } from '@react-navigation/native';
 
 const HomeScreen = (props) => {
 
+    const [alias, setAlias] = useState("")
+
+    const entityRef = db.collection("usuarios")
+
+    //Para poder cambiar el alias cada vez que la edito
+    //const isFocused = useIsFocused()
+
+    useEffect(()=>{/*
+        console.log(auth.currentUser.displayName)
+        auth?.currentUser?.updateProfile({displayName: auth?.currentUser?.displayName})*/
+
+        if(auth?.currentUser?.displayName){
+            entityRef.where("email", "==", auth?.currentUser?.email).onSnapshot(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    const al = documentSnapshot.data().alias
+                    console.log(al)
+                    setAlias(al)
+                    console.log(alias)
+                })
+            })
+        }
+        else{
+            auth.signOut().then(()=>{
+                alert('Cuenta creada con éxito!, por favor ingrese con sus credenciales')
+                props.navigation.replace('Login')
+            })
+
+        }
+        
+    },[]) 
+    //[isFocused])
+
     const signOut = () => {
+        console.log(auth.currentUser)
         auth.signOut().then(() => {
             // Sign-out successful.
             props.navigation.replace('Login')
         }).catch((error) => {
-            // An error happened.
+            alert('Se ha desconectado')
+            props.navigate.replace('Login')
         });
     }
 
@@ -30,7 +65,7 @@ const HomeScreen = (props) => {
                 <Avatar rounded size={200} source={{uri: auth?.currentUser?.photoURL}}></Avatar>
             </View>
             <View >
-                <Text style={HomeStyles.saludo}>¡Hola {auth?.currentUser?.displayName}!</Text>
+                <Text style={HomeStyles.saludo}>¡Hola {alias ? alias : auth?.currentUser?.displayName}!</Text>
             </View>
             <View >
                 <Text style={HomeStyles.pregunta}>¿Qué deseas hacer con tu ShipSecure?</Text>
