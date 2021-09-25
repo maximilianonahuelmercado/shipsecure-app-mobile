@@ -4,6 +4,9 @@ import CrearEnvioStyles from '../styles/CrearEnvioStyles'
 import {CheckBox} from 'react-native-elements'
 import { Button } from 'react-native';
 import { db }  from '../database/firebase'
+import { Ionicons } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker'
+
 import Mailer from 'react-native-email'
 import RNSmtpMailer from 'react-native-smtp-mailer'
 import sendEmail from 'react-native-email';
@@ -16,7 +19,7 @@ const CrearEnvioScreen = (props) => {
     //Hooks para los textInput
     const [nombre, setNombre] = useState('')
     const [apellido, setApellido] = useState('')
-    const [fechaNacimiento, setFechaNacimiento] = useState('')
+    const [dni, setDNI] = useState('')
     const [email, setEmail] = useState('')
     const [direccion, setDireccion] = useState('')
     const [piso, setPiso] = useState('')
@@ -24,10 +27,47 @@ const CrearEnvioScreen = (props) => {
     const [codigoPostal, setCodigoPostal] = useState('')
     const [provincia, setProvincia] = useState('')
     const [observaciones, setObservaciones] = useState('')
-    const [fechaEntrega, setFechaEntrega] = useState('')
-    const [horaEntrega, setHoraEntrega] = useState('')
     const [peso, setPeso] = useState('')
     const [temperatura, setTemperatura] = useState('')
+
+    const [date, setDate] = useState(new Date(Date.now()));
+    const [hour, setHour] = useState(new Date(Date.now()))
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+    const [showTime, setShowTime] = useState(false);
+
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+      };
+
+      const onChangeHour = (event, selectedDate) => {
+        const currentHour = selectedDate || hour;
+        setShowTime(Platform.OS === 'ios');
+        setHour(currentHour);
+      };
+    
+      const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+      };
+    
+      const showTimeMode = (currentMode) => {
+          setShowTime(true);
+          setMode(currentMode);
+      }
+
+      const showDatepicker = () => {
+        showMode('datetime');
+      };
+
+      const showTimePicker = () => {
+        showTimeMode('time')
+      }
+    
+
     /*
    const handleEmail = (idPedido) => {
         Mailer(email, {
@@ -44,7 +84,7 @@ const CrearEnvioScreen = (props) => {
             id: idDoc,
             nombres: nombre,
             apellidos: apellido,
-            fechaNacimiento: fechaNacimiento,
+            dni: dni,
             email: email,
             direccion: direccion,
             piso: piso,
@@ -52,8 +92,8 @@ const CrearEnvioScreen = (props) => {
             codigoPostal: codigoPostal,
             provincia: provincia,
             observaciones: observaciones,
-            fechaEntrega: fechaEntrega,
-            horaEntrega: horaEntrega,
+            fechaEntrega: date.toLocaleDateString('es-AR'),
+            horaEntrega: hour.toLocaleTimeString('es-AR'),
             peso: peso,
             temperatura: temperatura,
             //estos campos seran necesarios luego para asignar un repartidor, una smartbox
@@ -71,74 +111,97 @@ const CrearEnvioScreen = (props) => {
             <View>
                 <Text style={CrearEnvioStyles.titulo}>DATOS DE CONTACTO</Text>
             </View>
-            <View style={{flexDirection:'row'}}>
+            <View>
                 <Text style={CrearEnvioStyles.label}>Nombres</Text>
-                <Text style={CrearEnvioStyles.label}>Apellidos</Text>
-            </View>
-            <View style={{flexDirection:'row'}}>
                 <TextInput style={CrearEnvioStyles.input} value={nombre} onChangeText={(text)=>setNombre(text)}></TextInput>
+            </View>
+            <View>
+                <Text style={CrearEnvioStyles.label}>Apellidos</Text>
                 <TextInput style={CrearEnvioStyles.input} value={apellido} onChangeText={(text)=>setApellido(text)}></TextInput>
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
-                <Text style={CrearEnvioStyles.label}>Fecha de Nacimiento</Text>
-                <Text style={CrearEnvioStyles.label}>Email</Text>
+            <View>
+                <Text style={CrearEnvioStyles.label}>DNI</Text>
+                <TextInput style={CrearEnvioStyles.input} placeholderTextColor="#687D87" value={dni} onChangeText={(text)=>setDNI(text)}></TextInput>     
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
-                <TextInput style={CrearEnvioStyles.input} placeholder="dd/mm/aaaa" placeholderTextColor="#687D87" value={fechaNacimiento} onChangeText={(text)=>setFechaNacimiento(text)}></TextInput>
+            <View>
+                <Text style={CrearEnvioStyles.label}>Email</Text>
                 <TextInput style={CrearEnvioStyles.input} value={email} onChangeText={(text)=>setEmail(text)}></TextInput>
             </View>
             <View>
                 <Text style={CrearEnvioStyles.titulo}>DATOS DE ENVÍO</Text>
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
+            <View>
                 <Text style={CrearEnvioStyles.label}>Dirección</Text>
-                <Text style={CrearEnvioStyles.label}>Piso/Departamento</Text>
+                <TextInput style={CrearEnvioStyles.input} value={direccion} onChangeText={(text)=>setDireccion(text)}></TextInput> 
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
-                <TextInput style={CrearEnvioStyles.input} value={direccion} onChangeText={(text)=>setDireccion(text)}></TextInput>
+            <View>
+                <Text style={CrearEnvioStyles.label}>Piso/Departamento</Text>
                 <TextInput style={CrearEnvioStyles.input} value={piso} onChangeText={(text)=>setPiso(text)}></TextInput>
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
+            <View>
                 <Text style={CrearEnvioStyles.label}>Localidad</Text>
-                <Text style={CrearEnvioStyles.label}>Código Postal</Text>
-            </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
                 <TextInput style={CrearEnvioStyles.input} value={localidad} onChangeText={(text)=>setLocalidad(text)}></TextInput>
+            </View>
+            <View>
+                <Text style={CrearEnvioStyles.label}>Código Postal</Text>
                 <TextInput style={CrearEnvioStyles.input} value={codigoPostal} onChangeText={(text)=>setCodigoPostal(text)}></TextInput>
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
+            <View>
                 <Text style={CrearEnvioStyles.label}>Provincia</Text>
-            </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
                 <TextInput style={CrearEnvioStyles.input} value={provincia} onChangeText={(text)=>setProvincia(text)}></TextInput>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Observaciones</Text>
-            </View>
-            <View>
+                 <Text style={CrearEnvioStyles.label}>Observaciones</Text>
                 <TextInput style={CrearEnvioStyles.textArea} multiline={true} numberOfLines={4} value={observaciones} onChangeText={(text)=>setObservaciones(text)}></TextInput>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
                 <CheckBox  uncheckedColor='#08AFA5' checkedColor='#FF5733' checked={isSelected} onPress={()=>setSelection(!isSelected)}></CheckBox>
                 <Text style={CrearEnvioStyles.labelEnvioProgramado}>¿Es envío programado?</Text>
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
+            {
+                isSelected && (
+                <View>
                 <Text style={CrearEnvioStyles.label}>Fecha de entrega</Text>
+                <View style={{flexDirection:'row'}}> 
+                    <Ionicons name="calendar-outline" size={25} onPress={showDatepicker} color="#FF5733" style={CrearEnvioStyles.icono}></Ionicons>
+                        <Text style={CrearEnvioStyles.fecha}>{date.toLocaleDateString('es-AR')}</Text>
+                        {show && (
+                            <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={mode}
+                            is24Hour={true}
+                            display="default"
+                            onChange={onChange}
+                            />
+                        )}
+                </View>
                 <Text style={CrearEnvioStyles.label}>Hora de entrega</Text>
-            </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
-                <TextInput style={CrearEnvioStyles.input} placeholder="dd/mm/aaaa" placeholderTextColor="#687D87" editable={isSelected == true ? true : false} value={fechaEntrega} onChangeText={(text)=>setFechaEntrega(text)}></TextInput>
-                <TextInput style={CrearEnvioStyles.input} placeholder="00:00 am - 23:59 pm" placeholderTextColor="#687D87" editable={isSelected == true ? true : false} value={horaEntrega} onChangeText={(text)=>setHoraEntrega(text)}></TextInput>
-            </View>
+                <View style={{flexDirection:'row'}}>
+                    <Ionicons name="time" size={25} onPress={showTimePicker} color="#FF5733" style={CrearEnvioStyles.icono}></Ionicons>
+                    <Text style={CrearEnvioStyles.fecha}>{hour.toLocaleTimeString('es-AR')}</Text>
+                    {showTime && (
+                        <DateTimePicker
+                        testID="TimePicker"
+                        value={hour}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={onChangeHour}
+                        />
+                    )}
+                </View>
+             </View>
+                )}
             <View>
                 <Text style={CrearEnvioStyles.titulo}>DATOS DE PEDIDO</Text>
             </View>
-            <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
-                <Text style={CrearEnvioStyles.label}>Peso</Text>
-                <Text style={CrearEnvioStyles.label}>Temperatura</Text>
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+            <View>
+                <Text style={CrearEnvioStyles.label}>Peso (en Kg)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={peso} onChangeText={(text)=>setPeso(text)}></TextInput>
+            </View>
+            <View>
+                <Text style={CrearEnvioStyles.label}>Temperatura (en C°)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={temperatura} onChangeText={(text)=>setTemperatura(text)}></TextInput>
             </View>
             <View style={CrearEnvioStyles.botonCrearEnvio}>

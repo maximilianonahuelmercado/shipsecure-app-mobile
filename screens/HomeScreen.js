@@ -11,6 +11,7 @@ import { useIsFocused } from '@react-navigation/native';
 const HomeScreen = (props) => {
 
     const [alias, setAlias] = useState("")
+    const [show, setShow] = useState(false);
 
     const entityRef = db.collection("usuarios")
 
@@ -25,9 +26,13 @@ const HomeScreen = (props) => {
             entityRef.where("email", "==", auth?.currentUser?.email).onSnapshot(querySnapshot => {
                 querySnapshot.forEach(documentSnapshot => {
                     const al = documentSnapshot.data().alias
-                    console.log(al)
                     setAlias(al)
-                    console.log(alias)
+                    if(documentSnapshot.data().esEmpleado){
+                        setShow(true)
+                    }
+                    else{
+                        setShow(false)
+                    }
                 })
             })
         }
@@ -43,7 +48,6 @@ const HomeScreen = (props) => {
     //[isFocused])
 
     const signOut = () => {
-        console.log(auth.currentUser)
         auth.signOut().then(() => {
             // Sign-out successful.
             props.navigation.replace('Login')
@@ -75,22 +79,24 @@ const HomeScreen = (props) => {
                 <Text style={HomeStyles.labelTextoCrearPedido}>Crear pedido</Text>
                 
             </View>
-            <View style={{flexDirection: "row", justifyContent: 'center'}}>
-                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50, marginRight: 90}}>
-                    <Ionicons name="eye-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("ConsultarPedido")}></Ionicons>
+            <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
+                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
+                    <Ionicons name="search" size={50} color="#003748" onPress={() => props.navigation.navigate("ConsultarPedido")}></Ionicons>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <Ionicons name="add-circle" size={50} color="#003748" onPress={() => props.navigation.navigate("CrearEnvio")}></Ionicons>
+                    <Ionicons name="create-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("CrearEnvio")}></Ionicons>
                 </TouchableOpacity>
             </View>
-            <View style={{alignSelf: 'center'}}>
-                <Text style={HomeStyles.labelTextoEntregarPedido}>Entregar pedido</Text>
-            </View>
-            <View style={{alignSelf:'center'}}>
-                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <Ionicons name="bus" size={50} color="#003748" onPress={()=> props.navigation.navigate("ConsultarPedido")}></Ionicons>
-                </TouchableOpacity>     
-            </View>
+            {   
+                show && (
+                    <View style={{alignSelf:'center'}}>
+                        <Text style={HomeStyles.labelTextoEntregarPedido}>Entregar pedido</Text>
+                    <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50, marginLeft: '3%'}}>
+                        <Ionicons name="cube" size={50} color="#003748" onPress={()=> props.navigation.navigate("ConsultarPedido")}></Ionicons>
+                    </TouchableOpacity>     
+                </View>
+                )
+            }
             <View>
                 <Text style={HomeStyles.inputLabelChatBot}>¿Necesitas ayuda? ¡Comunícate con ShipBot!</Text>
             </View>

@@ -29,7 +29,7 @@ export default StyleSheet.create(
             borderRadius: 25,
             marginBottom: 15,
             marginRight: 30,
-            width: 155
+            width: '100%'
         },
         textArea: {
             backgroundColor:'#2E4B5B',
@@ -54,6 +54,17 @@ export default StyleSheet.create(
             width: 200,
             borderRadius: 30,
             alignSelf: 'center',
+        },
+        fecha:{
+            marginLeft: '4%',
+            color: '#FFF',
+            fontSize: 20,
+            fontWeight: 'bold'
+        },
+        icon: {
+            position: 'absolute',
+            right: 15,
+            marginBottom: '5%',
+            color: '#FFF'
         }
-
     })

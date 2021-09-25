@@ -64,21 +64,12 @@ const RegistroScreen = ({ navigation }) => {
                             email: email,
                             fechaNacimiento: date.toLocaleDateString('es-AR'),
                             alias:'',
+                            esEmpleado:false,
                             puntos:0
                         })
                     }).catch(function (error) {
                         // An error happened.
-                    });/*
-                    console.log(auth)
-                    auth.signOut().then(() => {
-                        // Sign-out successful.
-                        navigation.replace('Login')
-                        alert('Cuenta creada con éxito, ingresa con tus datos')
-                    }).catch((error) => {
-                        // An error happened.
-                        console.log(auth.currentUser)
-                        console.log(error)
-                    });*/
+                    });
                 })
                 .catch((error) => {
                     var errorMessage = error.message;

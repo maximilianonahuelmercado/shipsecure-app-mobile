@@ -11,9 +11,11 @@ const ModificarPerfilScreen = ({navigation}) => {
     const [usuario, setUsuario] = useState([{}])
     const [alias, setAlias] = useState("")
     const [hidePass, setHidePass] = useState(true);
+    const [hideRePass, setHideRePass] = useState(true);
     const [repassword, setRepassword] = useState('');
     const [confRepassword, setConfRepassword] = useState('');
     const [isSelected, setSelection] = useState(false)
+
 
     const entityRef = db.collection("usuarios")
     
@@ -107,10 +109,10 @@ const ModificarPerfilScreen = ({navigation}) => {
                                 value={confRepassword}
                                 onChangeText={text => setConfRepassword(text)}
                                 editable={isSelected == true ? true : false}
-                                secureTextEntry={hidePass ? true : false}
+                                secureTextEntry={hideRePass ? true : false}
 
                             />
-                            <Ionicons name={hidePass ? 'eye' : 'eye-off-outline'} size={30} style={ModificarPerfilStyles.icon} onPress={() => setHidePass(!hidePass)}/>
+                            <Ionicons name={hideRePass ? 'eye' : 'eye-off-outline'} size={30} style={ModificarPerfilStyles.icon} onPress={() => setHideRePass(!hideRePass)}/>
                         </View>
                         <View style={ModificarPerfilStyles.botonActualizar}>
                             <Button color="#08AFA5" title="Actualizar"
