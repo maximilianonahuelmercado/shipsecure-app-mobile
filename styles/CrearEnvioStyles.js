@@ -4,8 +4,8 @@ export default StyleSheet.create(
     {
         container: {
             flex: 1,
-            padding: '5%',
-            paddingBottom: 10,
+            padding: '10%',
+            paddingBottom: '5%',
             paddingTop:100,
             backgroundColor: '#003748'
         },
@@ -31,16 +31,19 @@ export default StyleSheet.create(
             marginRight: 30,
             width: '100%'
         },
+        picker: {
+            backgroundColor:'#2E4B5B',
+            color: '#FFF',
+            marginBottom: '5%',
+            width: '100%'
+
+        },
         textArea: {
             backgroundColor:'#2E4B5B',
             borderStyle: 'solid',
             color: '#FFF',
-            marginBottom: 15,
-            marginLeft: 10
-        },
-        checkbox:{
-            marginLeft: 10,
-            
+            marginBottom: '5%',
+            width: '100%'
         },
         labelEnvioProgramado:{
             color: '#08AFA5',
@@ -48,10 +51,18 @@ export default StyleSheet.create(
             marginTop: 15,
         },
         botonCrearEnvio:{   
-            marginTop: 40,
-            marginBottom: 40,
+            marginTop: '5%',
+            marginBottom: '5%',
             overflow: 'hidden',
-            width: 200,
+            width: '80%',
+            borderRadius: 30,
+            alignSelf: 'center',
+        },
+        botonCalcular:{
+            marginTop: '5%',
+            marginBottom: '5%',
+            overflow: 'hidden',
+            width: '80%',
             borderRadius: 30,
             alignSelf: 'center',
         },
@@ -66,5 +77,19 @@ export default StyleSheet.create(
             right: 15,
             marginBottom: '5%',
             color: '#FFF'
+        },
+        modal: {
+            alignSelf: 'center',
+            backgroundColor: '#FFF',
+            width: "80%",
+            height: "50%",
+            alignItems: "center",
+            justifyContent: "center",
+        },
+        modalText: {
+            color: '#000',
+            fontSize: 15,
+            fontWeight: 'bold',
+            marginBottom: '20%'
         }
     })

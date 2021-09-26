@@ -1,0 +1,27 @@
+{
+    "Buenos Aires": "R1",
+    "Córdoba": "R2",
+    "Entre Ríos": "R2",
+    "La Pampa": "R2",
+    "Santa Fe": "R2",
+    "Río Negro": "R2",
+    "Chubut": "R3",
+    "Neuquén": "R3",
+    "Mendoza": "R3",
+    "San Luis": "R3", 
+    "Santiago del Estero": "R3",
+    "Chaco": "R3",
+    "La Rioja": "R3",
+    "Catamarca": "R3",
+    "Corrientes": "R3",
+    "Salta":"R4",
+    "Formosa": "R4",
+    "Misiones": "R4",
+    "Santa Cruz": "R4",
+    "Tucumán": "R4",
+    "San Juan": "R4",
+    "Jujuy": "R5",
+    "Tierra del Fuego": "R5"
+
+
+}

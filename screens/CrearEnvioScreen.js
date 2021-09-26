@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TextInput, SafeAreaView} from 'react-native'
 import CrearEnvioStyles from '../styles/CrearEnvioStyles'
 import {CheckBox} from 'react-native-elements'
 import { Button } from 'react-native';
-import { db }  from '../database/firebase'
+import { rt, db }  from '../database/firebase'
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker'
-
-import Mailer from 'react-native-email'
-import RNSmtpMailer from 'react-native-smtp-mailer'
-import sendEmail from 'react-native-email';
+import { Picker } from '@react-native-picker/picker'
+import Modal from 'react-native-modal'
+import * as region from '../assets/constants/regiones.json'
 
 const CrearEnvioScreen = (props) => {
 
@@ -29,13 +28,21 @@ const CrearEnvioScreen = (props) => {
     const [observaciones, setObservaciones] = useState('')
     const [peso, setPeso] = useState('')
     const [temperatura, setTemperatura] = useState('')
-
+    const [precio, setPrecio] = useState(0.00)
     const [date, setDate] = useState(new Date(Date.now()));
     const [hour, setHour] = useState(new Date(Date.now()))
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [showTime, setShowTime] = useState(false);
 
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+      setModalVisible(!isModalVisible);
+      if(!isModalVisible){
+        return calcularEnvio()
+      }
+    };
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -67,6 +74,35 @@ const CrearEnvioScreen = (props) => {
         showTimeMode('time')
       }
     
+    
+     const calcularEnvio = () => {
+        
+        var pesos = 0.00
+        if(peso >= 30){
+            pesos += 1000.00
+        }else if(peso >=15){
+            pesos += 700.00
+        }
+        else{
+            pesos += 500.00
+        }
+        if(region[provincia] === "R1"){
+            pesos = pesos + 200.00
+        }
+        else if(region[provincia] === "R2"){
+            pesos = pesos + 350.00
+        }
+        else if(region[provincia] === "R3"){
+            pesos = pesos + 450.00
+        }
+        else if(region[provincia] === "R4"){
+            pesos = pesos + 600.00
+        }
+        else{
+            pesos = pesos + 700.00
+        }
+        setPrecio(pesos)
+      }
 
     /*
    const handleEmail = (idPedido) => {
@@ -78,30 +114,45 @@ const CrearEnvioScreen = (props) => {
     */
 
     const addEnvio = () => {
-        //generamos un random de 6 digitos para el id de envio
-        const idDoc = (100000 + Math.floor(Math.random() * 900000)).toString()
-        entityRef.doc(idDoc).set({
-            id: idDoc,
-            nombres: nombre,
-            apellidos: apellido,
-            dni: dni,
-            email: email,
-            direccion: direccion,
-            piso: piso,
-            localidad: localidad,
-            codigoPostal: codigoPostal,
-            provincia: provincia,
-            observaciones: observaciones,
-            fechaEntrega: date.toLocaleDateString('es-AR'),
-            horaEntrega: hour.toLocaleTimeString('es-AR'),
-            peso: peso,
-            temperatura: temperatura,
-            //estos campos seran necesarios luego para asignar un repartidor, una smartbox
-            usuarioCreado: false,
-            idSmartBox: "",
-            idRepartidor: ""
-        })
-        props.navigation.navigate("EnvioCreado")
+
+        //vaidacion previa de campos no nulos
+        if( nombre === '' || apellido === '' || dni === '' || direccion === '' || localidad === '' || codigoPostal === '' || provincia === '' || peso === '' || temperatura === ''){
+            alert("Hay campos sin completar!")
+        }
+        else{
+            //generamos un random de 6 digitos para el id de envio
+            //const idDoc = (100000 + Math.floor(Math.random() * 900000)).toString()
+            
+            //Para test rapido
+            const idDoc = "999999"
+            entityRef.doc(idDoc).set({
+                id: idDoc,
+                nombres: nombre,
+                apellidos: apellido,
+                dni: dni,
+                email: email,
+                direccion: direccion,
+                piso: piso,
+                localidad: localidad,
+                codigoPostal: codigoPostal,
+                provincia: provincia,
+                observaciones: observaciones,
+                fechaEntrega: date.toLocaleDateString('es-AR'),
+                horaEntrega: hour.toLocaleTimeString('es-AR'),
+                peso: parseInt(peso),
+                temperatura: parseInt(temperatura),
+                precio: precio,
+                //estos campos seran necesarios luego para asignar un repartidor, una smartbox
+                usuarioCreado: false,
+                idSmartBox: "",
+                idRepartidor: "",
+            })
+            rt.ref('/envio').update({
+                idQR: idDoc, 
+                temperatura: parseInt(temperatura)
+            })
+            props.navigation.navigate("EnvioCreado")
+        }
      }
 
     return (
@@ -138,17 +189,48 @@ const CrearEnvioScreen = (props) => {
                 <Text style={CrearEnvioStyles.label}>Piso/Departamento</Text>
                 <TextInput style={CrearEnvioStyles.input} value={piso} onChangeText={(text)=>setPiso(text)}></TextInput>
             </View>
+          
+            <View>
+                <Text style={CrearEnvioStyles.label}>Código Postal</Text>
+                <TextInput style={CrearEnvioStyles.input} autoCompleteType={'postal-code'} value={codigoPostal} onChangeText={(text)=>setCodigoPostal(text)}></TextInput>
+            </View>
             <View>
                 <Text style={CrearEnvioStyles.label}>Localidad</Text>
                 <TextInput style={CrearEnvioStyles.input} value={localidad} onChangeText={(text)=>setLocalidad(text)}></TextInput>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Código Postal</Text>
-                <TextInput style={CrearEnvioStyles.input} value={codigoPostal} onChangeText={(text)=>setCodigoPostal(text)}></TextInput>
-            </View>
-            <View>
                 <Text style={CrearEnvioStyles.label}>Provincia</Text>
-                <TextInput style={CrearEnvioStyles.input} value={provincia} onChangeText={(text)=>setProvincia(text)}></TextInput>
+                <Picker  
+                    style={CrearEnvioStyles.picker}
+                    selectedValue={provincia}    
+                    onValueChange={(itemValue, itemIndex) =>
+                    setProvincia(itemValue)
+                }>
+                     <Picker.Item label="" value="" />
+                    <Picker.Item label="Buenos Aires" value="Buenos Aires" />
+                    <Picker.Item label="Catamarca" value="Catamarca" />
+                    <Picker.Item label="Chaco" value="Chaco" />
+                    <Picker.Item label="Chubut" value="Chubut" />
+                    <Picker.Item label="Córdoba" value="Córdoba" />
+                    <Picker.Item label="Corrientes" value="Corrientes" />
+                    <Picker.Item label="Entre Ríos" value="Entre Ríos" />
+                    <Picker.Item label="Formosa" value="Formosa" />
+                    <Picker.Item label="Jujuy" value="Jujuy" />
+                    <Picker.Item label="La Pampa" value="La Pampa" />
+                    <Picker.Item label="La Rioja" value="La Rioja" />
+                    <Picker.Item label="Mendoza" value="Mendoza" />
+                    <Picker.Item label="Misiones" value="Misiones" />
+                    <Picker.Item label="Neuquén" value="Neuquén" />
+                    <Picker.Item label="Río Negro" value="Río Negro" />
+                    <Picker.Item label="Salta" value="Salta" />
+                    <Picker.Item label="San Juan" value="San Juan" />
+                    <Picker.Item label="San Luis" value="San Luis" />
+                    <Picker.Item label="Santa Cruz" value="Santa Cruz" />
+                    <Picker.Item label="Santa Fe" value="Santa Fe" />
+                    <Picker.Item label="Santiago del Estero" value="Santiago del Estero" />
+                    <Picker.Item label="Tierra del Fuego" value="Tierra del Fuego" />
+                    <Picker.Item label="Tucumán" value="Tucumán" />
+                </Picker>
             </View>
             <View>
                  <Text style={CrearEnvioStyles.label}>Observaciones</Text>
@@ -204,6 +286,17 @@ const CrearEnvioScreen = (props) => {
                 <Text style={CrearEnvioStyles.label}>Temperatura (en C°)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={temperatura} onChangeText={(text)=>setTemperatura(text)}></TextInput>
             </View>
+            <View  style={CrearEnvioStyles.botonCalcular}>
+                <Button color="#08AFA5" title="CALCULAR COSTO DE ENVÍO" onPress={ toggleModal }></Button>
+            </View>
+            <Modal isVisible={isModalVisible}>
+                <View style={CrearEnvioStyles.modal}>
+                    <Text style={CrearEnvioStyles.modalText}>El precio es de {precio}$ pesos ARG</Text>
+                    <View>
+                        <Button color="#08AFA5" title="VOLVER" onPress={toggleModal} />
+                    </View>
+                </View>
+            </Modal>
             <View style={CrearEnvioStyles.botonCrearEnvio}>
                 <Button color="#08AFA5"  title="CONFIRMAR ENVÍO" onPress={ () => addEnvio()}></Button>
             </View>
