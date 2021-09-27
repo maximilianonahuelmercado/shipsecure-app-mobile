@@ -121,10 +121,9 @@ const CrearEnvioScreen = (props) => {
         }
         else{
             //generamos un random de 6 digitos para el id de envio
-            //const idDoc = (100000 + Math.floor(Math.random() * 900000)).toString()
-            
+            const idDoc = (100000 + Math.floor(Math.random() * 900000)).toString()
             //Para test rapido
-            const idDoc = "999999"
+            //const idDoc = "999999"
             entityRef.doc(idDoc).set({
                 id: idDoc,
                 nombres: nombre,
@@ -148,7 +147,8 @@ const CrearEnvioScreen = (props) => {
                 idRepartidor: "",
             })
             rt.ref('/envio').update({
-                idQR: idDoc, 
+                idQR: idDoc,
+                puerta:true,
                 temperatura: parseInt(temperatura)
             })
             props.navigation.navigate("EnvioCreado")
