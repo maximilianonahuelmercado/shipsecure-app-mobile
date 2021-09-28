@@ -29,12 +29,12 @@ const CrearEnvioScreen = (props) => {
     const [peso, setPeso] = useState('')
     const [temperatura, setTemperatura] = useState('')
     const [precio, setPrecio] = useState(0.00)
-    const [date, setDate] = useState(new Date(Date.now()));
+    const [date, setDate] = useState(new Date(Date.now() + (5 * 86400000)));
     const [hour, setHour] = useState(new Date(Date.now()))
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [showTime, setShowTime] = useState(false);
-
+    const [flag, setFlag] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
@@ -47,7 +47,7 @@ const CrearEnvioScreen = (props) => {
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
-        setDate(currentDate);
+        setDate(currentDate); 
       };
 
       const onChangeHour = (event, selectedDate) => {
@@ -72,6 +72,7 @@ const CrearEnvioScreen = (props) => {
 
       const showTimePicker = () => {
         showTimeMode('time')
+        setFlag(true)
       }
     
     
@@ -135,15 +136,14 @@ const CrearEnvioScreen = (props) => {
                 localidad: localidad,
                 codigoPostal: codigoPostal,
                 provincia: provincia,
-                observaciones: observaciones,
-                fechaEntrega: date.toLocaleDateString('es-AR'),
-                horaEntrega: hour.toLocaleTimeString('es-AR'),
+                observaciones: observaciones ? observaciones : "N/A",
+                fechaEntrega: date.toLocaleDateString("es-AR"),
+                horaEntrega: flag ? hour.toLocaleTimeString("es-AR") : "9:00 - 20:00",
                 peso: parseInt(peso),
                 temperatura: parseInt(temperatura),
                 precio: precio,
                 //estos campos seran necesarios luego para asignar un repartidor, una smartbox
                 usuarioCreado: false,
-                idSmartBox: "",
                 idRepartidor: "",
             })
             rt.ref('/envio').update({

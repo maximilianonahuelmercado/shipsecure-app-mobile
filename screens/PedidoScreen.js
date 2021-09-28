@@ -20,26 +20,28 @@ const PedidoScreen = (props) => {
               temperatura: snapshot.val().temperatura, 
             }
             setSensor(sensores)
-            console.log(sensores)
           })
           
           console.log(sensor)
 
-        const subscriber = entityRef.doc(pedidoID).get().then(querySnapshot => {
-            const pedidos = []
-            if(querySnapshot.data().email === auth?.currentUser?.email){
-            pedidos.push({
-                ...querySnapshot.data(),
-                key: querySnapshot.id
-            })
-            setPedido(pedidos)
-           }
-           else{
-               //En caso de no encontrar el codigo vuelve a la pantalla UserHomeScreen hasta que ponga el id de envio valido
-               props.navigation.navigate('ConsultarPedido')
-               alert('Codigo de envío inválido o no pertenece a ninguno de sus pedidos')
-           }
-        })
+        const subscriber = entityRef.where("idPedido", "==", pedidoID).get().then(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+  
+                    if(documentSnapshot.data().email === auth?.currentUser?.email){
+                        const pedidos = []
+                        pedidos.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id
+                        })
+                        setPedido(pedidos)
+                    }
+                    else{
+                        //En caso de no encontrar el codigo vuelve a la pantalla UserHomeScreen hasta que ponga el id de envio valido
+                        props.navigation.navigate('ConsultarPedido')
+                        alert('Codigo de envío inválido o no pertenece a ninguno de sus pedidos')
+                    }
+                 })    
+           })
     }, [])
     
     return (
@@ -78,17 +80,17 @@ const PedidoScreen = (props) => {
                 <View style={PedidoStyles.botonMapa}>
                     <Button color="#08AFA5" title="Ver Mapa" onPress={() => props.navigation.navigate('SeguirPedido', {idPedido: pedidoID})}></Button>
                 </View>
-                <View style={{paddingTop: 10, flexDirection: "row", justifyContent: 'space-between'}}>
-                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {idPedido: pedidoID})}></Ionicons>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></Ionicons>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega})}></FontAwesome>
-                </TouchableOpacity>
-            </View>
+                <View style={{paddingTop: 10, flexDirection: "row", justifyContent: 'space-evenly'}}>
+                    <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
+                        <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {mail: item.email})}></Ionicons>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
+                        <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></Ionicons>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
+                        <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega})}></FontAwesome>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </SafeAreaView>
         )}>

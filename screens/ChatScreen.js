@@ -3,15 +3,17 @@ import { View } from 'react-native';
 import { db, auth } from '../database/firebase';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 
-const ChatScreen = (navigation) => {
+const ChatScreen = (props) => {
     const [messages, setMessages] = useState([]);
     const entityRef = db.collection('messagesRN')
-    
-    
+    //const idPedido = (props.route.params.idPedido).toString()
+    const email = props.route.params.mail
+
     /*GiftedChat maneja sus estilos en el tag por eso no hay archivo de styles asociada a esta screen*/
     useEffect(() => {
-        
-        const unsubscribe = entityRef.onSnapshot((querySnapshot) => {
+
+
+        const unsubscribe = entityRef.where("user._id", "==", email).onSnapshot((querySnapshot) => {
             const messagesFirestore = querySnapshot
                 .docChanges()
                 .filter(({ type }) => type === 'added')
@@ -55,7 +57,7 @@ const ChatScreen = (navigation) => {
             listViewProps={{style: {backgroundColor: '#003748'}}}
             user={{
                 _id: auth?.currentUser?.email,
-                name: auth?.currentUser?.displayName
+                name: auth?.currentUser?.displayName,
             }}
         />
 
