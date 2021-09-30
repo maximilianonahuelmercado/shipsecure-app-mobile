@@ -4,7 +4,7 @@ export default StyleSheet.create(
     {
         container: {
             flex: 1,
-            padding: '5%',
+            padding: '10%',
             paddingTop:80,
             backgroundColor: '#003748'
         },
@@ -65,7 +65,10 @@ export default StyleSheet.create(
             marginTop: 15
         },
         infoText:{
-            paddingLeft: 5,
+            fontSize: 11,
+            padding: 5,
+            alignContent: 'flex-start',
+            alignSelf: 'center',
             color: '#FFF'
         },
         botonEnviar: {

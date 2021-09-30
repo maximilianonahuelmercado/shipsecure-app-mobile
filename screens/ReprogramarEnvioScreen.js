@@ -96,7 +96,7 @@ const ReprogramarEnvioScreen = (props) => {
             </View>
             <View style={{flexDirection: 'row'}}>
                 <MaterialIcons name="info" size={24} color="#FF4916" />
-                <Text style={ReprogramarEnvioStyles.infoText}>Una vez que se envien los datos para reprogramar el envío se notificará automáticamente la modificación al repartidor y le llegará a su cuenta de mail el comprobante con el detalle y costo adicional del envío</Text>
+                <Text style={ReprogramarEnvioStyles.infoText}>Una vez enviados los datos se notificará automáticamente la modificación al repartidor y le llegará a su cuenta de mail el comprobante con el detalle y costo adicional del envío</Text>
             </View>
             <View style={ReprogramarEnvioStyles.botonEnviar}>
                 <Button color="#08AFA5" title="Enviar" onPress={ () => updateEnvio()}></Button>

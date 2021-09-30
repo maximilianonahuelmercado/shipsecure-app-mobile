@@ -81,15 +81,28 @@ export default StyleSheet.create(
         modal: {
             alignSelf: 'center',
             backgroundColor: '#FFF',
-            width: "80%",
+            width: "90%",
             height: "50%",
             alignItems: "center",
             justifyContent: "center",
         },
         modalText: {
+            padding: 30,
+            paddingTop: 0,
             color: '#000',
-            fontSize: 15,
+            fontSize: 17,
             fontWeight: 'bold',
             marginBottom: '20%'
-        }
+        },
+        modalTextAclaracion:{
+            paddingLeft: 10,
+            color: '#000',
+            fontSize: 10,
+            fontWeight: 'bold',
+        },
+        modalCaja:{
+            
+            alignSelf: 'flex-start',
+            marginBottom: '20%'
+        },
     })

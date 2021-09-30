@@ -22,9 +22,7 @@ const PedidoScreen = (props) => {
             setSensor(sensores)
           })
           
-          console.log(sensor)
-
-        const subscriber = entityRef.where("idPedido", "==", pedidoID).get().then(querySnapshot => {
+        const subscriber = entityRef.where("id", "==", pedidoID).get().then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
   
                     if(documentSnapshot.data().email === auth?.currentUser?.email){
