@@ -80,7 +80,7 @@ const PedidoScreen = (props) => {
                 </View>
                 <View style={{paddingTop: 10, flexDirection: "row", justifyContent: 'space-evenly'}}>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                        <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {mail: item.email})}></Ionicons>
+                        <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {idPedido: pedidoID})}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
                         <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></Ionicons>

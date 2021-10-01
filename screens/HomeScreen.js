@@ -92,7 +92,7 @@ const HomeScreen = (props) => {
                     <View style={{alignSelf:'center'}}>
                         <Text style={HomeStyles.labelTextoEntregarPedido}>Entregar pedido</Text>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50, marginLeft: '3%'}}>
-                        <Ionicons name="cube" size={50} color="#003748" onPress={()=> props.navigation.navigate("ConsultarPedido")}></Ionicons>
+                        <Ionicons name="cube" size={50} color="#003748" onPress={()=> props.navigation.navigate("Repartidor")}></Ionicons>
                     </TouchableOpacity>     
                 </View>
                 )

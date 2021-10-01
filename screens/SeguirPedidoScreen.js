@@ -23,8 +23,8 @@ const SeguirPedidoScreen = (props) => {
       const mr = {
         latitude: snapshot.val().latitude,
         longitude: snapshot.val().longitude, 
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005
+        latitudeDelta: 2,
+        longitudeDelta: 2
       }
       setmapRegion(mr)
     })

@@ -11,6 +11,7 @@ import HomeScreen from './screens/HomeScreen'
 import BeneficiosScreen from './screens/BeneficiosScreen';
 import ModificarPerfilScreen from './screens/ModifcarPerfilScreen';
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
+import RepartidorScreen from './screens/RepartidorScreen'
 import PedidoScreen from './screens/PedidoScreen'
 import ChatScreen from './screens/ChatScreen';
 import SeguirPedidoScreen from './screens/SeguirPedidoScreen'
@@ -28,6 +29,7 @@ const Stack = createStackNavigator()
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
+        <Stack.Screen name="Repartidor" component={RepartidorScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
         <Stack.Screen name="Chat" component={ChatScreen}></Stack.Screen>
         <Stack.Screen name="SeguirPedido" component={SeguirPedidoScreen}></Stack.Screen>

@@ -7,13 +7,13 @@ const ChatScreen = (props) => {
     const [messages, setMessages] = useState([]);
     const entityRef = db.collection('messagesRN')
     //const idPedido = (props.route.params.idPedido).toString()
-    const email = props.route.params.mail
+    const idPedido = props.route.params.idPedido
 
     /*GiftedChat maneja sus estilos en el tag por eso no hay archivo de styles asociada a esta screen*/
     useEffect(() => {
 
 
-        const unsubscribe = entityRef.where("user._id", "==", email).onSnapshot((querySnapshot) => {
+        const unsubscribe = entityRef.where("user.idPedido", "==", idPedido).onSnapshot((querySnapshot) => {
             const messagesFirestore = querySnapshot
                 .docChanges()
                 .filter(({ type }) => type === 'added')
@@ -56,8 +56,9 @@ const ChatScreen = (props) => {
             placeholder="Escribe tu mensaje aquí..."
             listViewProps={{style: {backgroundColor: '#003748'}}}
             user={{
-                _id: auth?.currentUser?.email,
+                _id: auth?.currentUser?.email ,
                 name: auth?.currentUser?.displayName,
+                idPedido: idPedido,
             }}
         />
 

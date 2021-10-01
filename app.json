@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/sssplash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#003748"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +24,7 @@
       "package": "com.shipsecure.direcciones",
       "adaptiveIcon": {
         "foregroundImage": "./assets/ssicon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#003748"
       },
       "config": {
         "googleMaps": {
@@ -37,3 +37,4 @@
     }
   }
 }
+
