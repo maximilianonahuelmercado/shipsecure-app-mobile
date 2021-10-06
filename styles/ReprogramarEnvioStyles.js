@@ -32,6 +32,16 @@ export default StyleSheet.create(
             marginRight: 30,
             marginTop: 5
         },
+        inputBloq: {
+            padding: 5,
+            backgroundColor:'#2E4B5B',
+            borderStyle: 'solid',
+            color: '#998E8E',
+            borderRadius: 25,
+            marginBottom: 15,
+            marginRight: 30,
+            marginTop: 5
+        },
         inputDateTime: {
             padding: 5,
             backgroundColor:'#2E4B5B',
@@ -46,6 +56,15 @@ export default StyleSheet.create(
             backgroundColor:'#2E4B5B',
             borderStyle: 'solid',
             color: '#FFF',
+            marginBottom: 15,
+            marginRight: 30,
+            marginTop: 5
+        },
+        inputMultilineBloq: {
+            padding: 5,
+            backgroundColor:'#2E4B5B',
+            borderStyle: 'solid',
+            color: '#998E8E',
             marginBottom: 15,
             marginRight: 30,
             marginTop: 5
@@ -78,6 +97,18 @@ export default StyleSheet.create(
             alignSelf: 'center',
             marginTop: 30,
             marginBottom: 25        
-        }
+        },
+        fecha:{
+            marginLeft: '4%',
+            color: '#FFF',
+            fontSize: 20,
+            fontWeight: 'bold'
+        },
+        icon: {
+            position: 'absolute',
+            right: 15,
+            marginBottom: '5%',
+            color: '#FFF'
+        },
     }
 )

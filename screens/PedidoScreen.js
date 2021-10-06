@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Button} from 'react-native'
 import { rt, db, auth }  from '../database/firebase'
 import PedidoStyles from '../styles/PedidoStyles'
-import { Ionicons , FontAwesome5 , FontAwesome } from '@expo/vector-icons';
+import { Ionicons  , FontAwesome } from '@expo/vector-icons';
 
 const PedidoScreen = (props) => {
 
@@ -86,7 +86,7 @@ const PedidoScreen = (props) => {
                         <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                        <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega})}></FontAwesome>
+                        <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega, precio: item.precio})}></FontAwesome>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

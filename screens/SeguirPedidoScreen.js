@@ -21,10 +21,10 @@ const SeguirPedidoScreen = (props) => {
   useEffect(() => {
     rt.ref('/sensores').on('value', snapshot => {
       const mr = {
-        latitude: snapshot.val().latitude,
-        longitude: snapshot.val().longitude, 
-        latitudeDelta: 2,
-        longitudeDelta: 2
+        latitude: parseFloat(snapshot.val().latitude),
+        longitude: parseFloat(snapshot.val().longitude), 
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005
       }
       setmapRegion(mr)
     })
