@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, ScrollView, Button, SafeAreaView, EventEmitter } from 'react-native';
 import { Avatar } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import * as WebBrowser from 'expo-web-browser'
 import { db, auth } from '../database/firebase';
 import { useIsFocused } from '@react-navigation/native';
 
-const HomeScreen = (props) => {
+const HomeScreen = ({navigation}) => {
 
     const [alias, setAlias] = useState("")
     const [show, setShow] = useState(false);
@@ -17,6 +17,18 @@ const HomeScreen = (props) => {
 
     //Para poder cambiar el alias cada vez que la edito
     //const isFocused = useIsFocused()
+
+
+    useLayoutEffect(()=>{
+        navigation.setOptions({
+            headerLeft: ()=> (
+                <Ionicons size={40} name="menu" style={{paddingLeft:15}} onPress={()=>navigation.openDrawer()}></Ionicons>
+            ),
+            headerRight:()=>(
+                <Ionicons size={35} name="log-out" style={{paddingRight:15}} onPress={signOut}></Ionicons>
+            )
+        })
+    })
 
     useEffect(()=>{/*
         console.log(auth.currentUser.displayName)
@@ -39,7 +51,7 @@ const HomeScreen = (props) => {
         else{
             auth.signOut().then(()=>{
                 alert('Cuenta creada con éxito!, por favor ingrese con sus credenciales')
-                props.navigation.replace('Login')
+                navigation.replace('Login')
             })
 
         }
@@ -50,10 +62,10 @@ const HomeScreen = (props) => {
     const signOut = () => {
         auth.signOut().then(() => {
             // Sign-out successful.
-            props.navigation.replace('Login')
+            navigation.replace('Login')
         }).catch((error) => {
             alert('Se ha desconectado')
-            props.navigate.replace('Login')
+            navigate.replace('Login')
         });
     }
 
@@ -62,7 +74,7 @@ const HomeScreen = (props) => {
     }
 
     return ( 
-        
+    
      <SafeAreaView style={HomeStyles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={HomeStyles.avatar}>
@@ -81,10 +93,10 @@ const HomeScreen = (props) => {
             </View>
             <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <Ionicons name="search" size={50} color="#003748" onPress={() => props.navigation.navigate("ConsultarPedido")}></Ionicons>
+                    <Ionicons name="search" size={50} color="#003748" onPress={() => navigation.navigate("ConsultarPedido")}></Ionicons>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                    <Ionicons name="create-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("CrearEnvio")}></Ionicons>
+                    <Ionicons name="create-outline" size={50} color="#003748" onPress={() => navigation.navigate("CrearEnvio")}></Ionicons>
                 </TouchableOpacity>
             </View>
             {   
@@ -92,7 +104,7 @@ const HomeScreen = (props) => {
                     <View style={{alignSelf:'center'}}>
                         <Text style={HomeStyles.labelTextoEntregarPedido}>Entregar pedido</Text>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50, marginLeft: '3%'}}>
-                        <Ionicons name="cube" size={50} color="#003748" onPress={()=> props.navigation.navigate("Repartidor")}></Ionicons>
+                        <Ionicons name="cube" size={50} color="#003748" onPress={()=> navigation.navigate("Repartidor")}></Ionicons>
                     </TouchableOpacity>     
                 </View>
                 )
@@ -102,9 +114,6 @@ const HomeScreen = (props) => {
             </View>
             <View style={HomeStyles.botonChatBot}>
                 <Button color="#08AFA5" title="Chatear" onPress={_handleOpenChatBot}></Button>
-            </View>
-            <View style={HomeStyles.botonChatBot}>
-                <Button color="#08AFA5" title="Cerrar Sesion" onPress={signOut}></Button>
             </View>
         </ScrollView>
     </SafeAreaView>

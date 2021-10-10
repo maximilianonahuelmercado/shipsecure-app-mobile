@@ -5,13 +5,10 @@ export default StyleSheet.create(
         container: {
             flex: 1,
             padding: '5%',
-            paddingTop:80,
-            backgroundColor: '#003748'
+            backgroundColor: '#003348'
         },
         inputLabelTituloPedidoID:{
             padding: 10,
-            paddingBottom:0,
-            marginBottom:0,
             fontWeight: 'bold',
             fontSize: 20,
             color: '#08AFA5'

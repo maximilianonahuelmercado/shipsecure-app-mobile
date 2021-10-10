@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useLayoutEffect } from 'react'
 import { View,TextInput, SafeAreaView, ScrollView, Text, Button, Alert } from 'react-native'
 import {CheckBox} from 'react-native-elements'
 import { db, auth} from '../database/firebase';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
 import ModificarPerfilStyles from '../styles/ModificarPerfilStyles'
 
 
@@ -21,7 +22,13 @@ const ModificarPerfilScreen = ({navigation}) => {
     
 
 
-    //Cambiar el displayName del auth user a un ALIAS en firestore!
+    useLayoutEffect(()=>{
+        navigation.setOptions({
+            headerLeft: ()=> (
+                <Ionicons size={40} name="menu" style={{paddingLeft:15}} onPress={()=>navigation.openDrawer()}></Ionicons>
+            )
+        })
+    })
 
 
    const updateUser = () =>  {
@@ -29,7 +36,7 @@ const ModificarPerfilScreen = ({navigation}) => {
             if(repassword === confRepassword){
                 auth.currentUser.updatePassword(repassword).then(function (){
                     auth.signOut().then(()=>{  
-                        navigation.navigate("Home")
+                        navigation.navigate("Login")
                         alert('La contraseña ha sido actualizada por favor volver a ingresar a la aplicacion')
                     })
                 }).catch((error) => {

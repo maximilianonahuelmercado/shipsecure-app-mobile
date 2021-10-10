@@ -81,7 +81,7 @@ const ReprogramarEnvioScreen = (props) => {
     <SafeAreaView style={ReprogramarEnvioStyles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
-                <MaterialIcons name="edit-location" size={40} color={'#08AFA5'}/>
+                <MaterialIcons name="edit-location" size={35} color={'#08AFA5'}/>
                 <Text style={ReprogramarEnvioStyles.inputLabelTituloReprogramarEnvio}>Reprogramar Envío</Text>
             </View>
             <View style={ReprogramarEnvioStyles.linea}/>
@@ -134,7 +134,7 @@ const ReprogramarEnvioScreen = (props) => {
                 )}
             <View style={{flexDirection: 'row', marginTop: '10%'}}>
                 <MaterialIcons name="info" size={24} color="#FF4916" />
-                <Text style={ReprogramarEnvioStyles.infoText}>Una vez enviados los datos se notificará automáticamente la modificación al repartidor y le llegará a su cuenta de mail el comprobante con el detalle y costo adicional del envío</Text>
+                <Text style={ReprogramarEnvioStyles.infoText}>Una vez enviados los datos se notificará automáticamente la {"\n"}modificación al repartidor y le llegará a su email el comprobante {"\n"}con el detalle y costo adicional del envío</Text>
             </View>
             <View style={ReprogramarEnvioStyles.botonEnviar}>
                 <Button color="#08AFA5" title="Enviar" onPress={ () => updateEnvio()}></Button>

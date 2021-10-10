@@ -4,17 +4,14 @@ export default StyleSheet.create(
     {
         container: {
             flex: 1,
-            padding: '10%',
-            paddingTop:80,
-            backgroundColor: '#003748'
+            padding: '5%',
+            backgroundColor: '#003348'
         },
         inputLabelTituloReprogramarEnvio:{
             padding: 10,
-            marginBottom:5,
             fontWeight: 'bold',
             fontSize: 20,
-            color: '#08AFA5',
-            marginLeft: 5
+            color: '#08AFA5'
         },
         linea:{
             

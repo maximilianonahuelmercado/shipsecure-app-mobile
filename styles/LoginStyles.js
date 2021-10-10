@@ -7,7 +7,7 @@ export default StyleSheet.create(
             padding: 25,
             paddingBottom: 10,
             paddingTop:100,
-            backgroundColor: '#003748'
+            backgroundColor: '#003348'
         },
         tituloPrincipal:{
             marginTop:50,

@@ -5,7 +5,7 @@ export default StyleSheet.create(
         container: {
             flex: 1,
             padding: '5%',
-            backgroundColor: '#003748'
+            backgroundColor: '#003348'
         },
         botonChatBot: {
 

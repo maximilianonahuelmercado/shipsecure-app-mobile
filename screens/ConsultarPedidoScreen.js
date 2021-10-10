@@ -3,10 +3,11 @@ import { View, Text,  Button, TextInput, ScrollView } from 'react-native'
 import ConsultarPedidoStyles from '../styles/ConsultarPedidoStyles'
 import { Ionicons } from '@expo/vector-icons'
 
-const ConsultarPedidoScreen = (props) => {
+const ConsultarPedidoScreen = ({navigation}) => {
     const [state, setState] = useState({
         nroPedido: "",
     })
+
 
 const handleChangeText = (nroPedido, value) => {
     setState({...state, [nroPedido]: value})
@@ -25,7 +26,7 @@ const handleChangeText = (nroPedido, value) => {
                 <TextInput style={ConsultarPedidoStyles.input} placeholder="Código de envío" placeholderTextColor="#687D87" onChangeText={(value) => handleChangeText('nroPedido', value)}></TextInput>
             </View>
             <View style={ConsultarPedidoStyles.botonConsultar}>
-                <Button color="#08AFA5"  title="Consultar" onPress={() => props.navigation.navigate('Pedido', {nroPedido: JSON.parse(state.nroPedido)})}></Button>
+                <Button color="#08AFA5"  title="Consultar" onPress={() => navigation.navigate('Pedido', {nroPedido: JSON.parse(state.nroPedido)})}></Button>
             </View>
         </ScrollView>
     )

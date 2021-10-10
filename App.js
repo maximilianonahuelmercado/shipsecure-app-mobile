@@ -3,6 +3,9 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useNavigation, CommonActions } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'
+import { db, auth } from './database/firebase';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
 import LoginScreen from './screens/LoginScreen';
 import ReestablecerPasswordScreen from './screens/ReestablecerPasswordScreen';
@@ -21,13 +24,32 @@ import ReprogramarEnvioScreen from './screens/ReprogramarEnvioScreen'
 import QRScannerScreen from './screens/QRScannerScreen'
 
 
+
+
+const signOut = () => {
+  const navigation = useNavigation();
+  auth.signOut().then(() => {
+      // Sign-out successful.
+      console.log('ok')
+      navigation.navigate("LoginScreen")
+  }).catch((error) => {
+      alert('Se ha desconectado')
+  });
+}
+
 const Stack = createStackNavigator()
+
+function LogoTitle() {
+  return (
+    <Ionicons name="menu-sharp" size={35}></Ionicons>
+  );
+}
 
 
  function MyHomeStack(){
   return(
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+      <Stack.Navigator screenOptions={{headerShown: true, headerStyle: {backgroundColor:'#08AFA5'}, headerTitle: ""}}>
+        <Stack.Screen name="Home" component={HomeScreen} options={({ navigation, route }) => ({})}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Repartidor" component={RepartidorScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
@@ -41,6 +63,23 @@ const Stack = createStackNavigator()
   )
 }
 
+function MyBeneficiosStack(){
+  return(
+    <Stack.Navigator screenOptions={{headerShown: true, headerStyle: {backgroundColor:'#08AFA5'}, headerTitle: ""}}>
+      <Stack.Screen name="Beneficios" component={BeneficiosScreen}></Stack.Screen>
+    </Stack.Navigator>
+  )
+}
+
+
+function MyEditarPerfilStack(){
+  return(
+    <Stack.Navigator screenOptions={{headerShown: true, headerStyle: {backgroundColor:'#08AFA5'}, headerTitle: ""}}>
+      <Stack.Screen name="Editar Perfil" component={ModificarPerfilScreen}></Stack.Screen>
+    </Stack.Navigator>
+  )
+}
+
 
 const Drawer = createDrawerNavigator();
 
@@ -49,8 +88,8 @@ function MyDrawer(){
   return(
     <Drawer.Navigator initialRouteName="Home" drawerStyle={{backgroundColor: "#08AFA5" }} drawerContentOptions={{activeTintColor: '#000',activeBackgroundColor: "rgba(255,255,255,0.5)"} }>
        <Drawer.Screen name="Home" component={MyHomeStack}></Drawer.Screen>
-       <Drawer.Screen name="Editar Perfil" component={ModificarPerfilScreen}></Drawer.Screen>
-       <Drawer.Screen name="Beneficios" component={BeneficiosScreen}></Drawer.Screen>
+       <Drawer.Screen name="Editar Perfil" component={MyEditarPerfilStack}></Drawer.Screen>
+       <Drawer.Screen name="Beneficios" component={MyBeneficiosStack}></Drawer.Screen>
     </Drawer.Navigator>
   )
 
@@ -68,6 +107,7 @@ export default function App() {
       </NavigationContainer> 
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

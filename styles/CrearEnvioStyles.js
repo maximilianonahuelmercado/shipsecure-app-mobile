@@ -6,8 +6,7 @@ export default StyleSheet.create(
             flex: 1,
             padding: '10%',
             paddingBottom: '5%',
-            paddingTop:100,
-            backgroundColor: '#003748'
+            backgroundColor: '#003348'
         },
         titulo:{
             padding: 20,  

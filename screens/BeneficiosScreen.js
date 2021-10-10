@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
 import { View, Text,  Button, FlatList, ScrollView, SafeAreaView } from 'react-native'
 import { auth, db } from '../database/firebase';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,10 +7,18 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress'
 import * as premios from '../assets/constants/premios'
 
 
-const BeneficiosScreen = () => {
+const BeneficiosScreen = ({navigation}) => {
 
     const usuarioEntity = db.collection("usuarios")
     const [puntos, setPuntos] = useState(0)
+
+    useLayoutEffect(()=>{
+        navigation.setOptions({
+            headerLeft: ()=> (
+                <Ionicons size={40} name="menu" style={{paddingLeft:15}} onPress={()=>navigation.openDrawer()}></Ionicons>
+            )
+        })
+    })
 
     useEffect(()=>{
 
