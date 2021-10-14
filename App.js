@@ -13,6 +13,7 @@ import RegistroScreen from './screens/RegistroScreen';
 import HomeScreen from './screens/HomeScreen'
 import BeneficiosScreen from './screens/BeneficiosScreen';
 import ModificarPerfilScreen from './screens/ModifcarPerfilScreen';
+import HistoricoScreen from './screens/HistoricoScreen';
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import RepartidorScreen from './screens/RepartidorScreen'
 import PedidoScreen from './screens/PedidoScreen'
@@ -25,26 +26,7 @@ import QRScannerScreen from './screens/QRScannerScreen'
 
 
 
-
-const signOut = () => {
-  const navigation = useNavigation();
-  auth.signOut().then(() => {
-      // Sign-out successful.
-      console.log('ok')
-      navigation.navigate("LoginScreen")
-  }).catch((error) => {
-      alert('Se ha desconectado')
-  });
-}
-
 const Stack = createStackNavigator()
-
-function LogoTitle() {
-  return (
-    <Ionicons name="menu-sharp" size={35}></Ionicons>
-  );
-}
-
 
  function MyHomeStack(){
   return(
@@ -80,6 +62,14 @@ function MyEditarPerfilStack(){
   )
 }
 
+function MyHistoricoStack(){
+  return(
+    <Stack.Navigator screenOptions={{headerShown: true, headerStyle: {backgroundColor:'#08AFA5'}, headerTitle: ""}}>
+      <Stack.Screen name="Histórico de envíos" component={HistoricoScreen}></Stack.Screen>
+    </Stack.Navigator>
+  )
+}
+
 
 const Drawer = createDrawerNavigator();
 
@@ -90,6 +80,7 @@ function MyDrawer(){
        <Drawer.Screen name="Home" component={MyHomeStack}></Drawer.Screen>
        <Drawer.Screen name="Editar Perfil" component={MyEditarPerfilStack}></Drawer.Screen>
        <Drawer.Screen name="Beneficios" component={MyBeneficiosStack}></Drawer.Screen>
+       <Drawer.Screen name="Historico de envíos" component={MyHistoricoStack}></Drawer.Screen>
     </Drawer.Navigator>
   )
 
