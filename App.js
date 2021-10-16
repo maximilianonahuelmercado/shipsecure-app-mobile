@@ -16,6 +16,7 @@ import ModificarPerfilScreen from './screens/ModifcarPerfilScreen';
 import HistoricoScreen from './screens/HistoricoScreen';
 import ConsultarPedidoScreen from './screens/ConsultarPedidoScreen'
 import RepartidorScreen from './screens/RepartidorScreen'
+import DetallePedidoScreen from './screens/DetallePedidoScreen';
 import PedidoScreen from './screens/PedidoScreen'
 import ChatScreen from './screens/ChatScreen';
 import SeguirPedidoScreen from './screens/SeguirPedidoScreen'
@@ -34,6 +35,7 @@ const Stack = createStackNavigator()
         <Stack.Screen name="Home" component={HomeScreen} options={({ navigation, route }) => ({})}></Stack.Screen>
         <Stack.Screen name="ConsultarPedido" component={ConsultarPedidoScreen}></Stack.Screen>
         <Stack.Screen name="Repartidor" component={RepartidorScreen}></Stack.Screen>
+        <Stack.Screen name="Detalle Pedido" component={DetallePedidoScreen}></Stack.Screen>
         <Stack.Screen name="Pedido" component={PedidoScreen}></Stack.Screen>
         <Stack.Screen name="Chat" component={ChatScreen}></Stack.Screen>
         <Stack.Screen name="SeguirPedido" component={SeguirPedidoScreen}></Stack.Screen>

@@ -9,8 +9,8 @@ export default StyleSheet.create(
     },
     texto:{
         color: '#FFF',
-        fontSize: 30,
-        padding: '5%'
+        fontSize: 25,
+        marginBottom: '2%'
     },
     inputLabelTitulo:{
         padding: 10,
@@ -23,6 +23,11 @@ export default StyleSheet.create(
         borderBottomColor: '#F7A583',
         borderBottomWidth: 1,
         marginBottom:10
+    },
+    label:{
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#08AFA5'
     },
         botonChatBot: {
 
