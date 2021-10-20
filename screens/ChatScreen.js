@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback  } from 'react'
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { db, auth } from '../database/firebase';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
+import { Ionicons } from '@expo/vector-icons'
 
 const ChatScreen = (props) => {
     const [messages, setMessages] = useState([]);
@@ -40,7 +41,9 @@ const ChatScreen = (props) => {
         const writes = messages.map((m) => entityRef.add(m))
         await Promise.all(writes)
     }
-    
+
+
+
     const renderBubble = (props) => {
         //Add the extra styles via containerStyle
        return <Bubble {...props} textStyle={{left:{color:'#FFF'}}} wrapperStyle={{right:{backgroundColor: '#08AFA5'}, left:{backgroundColor: '#FF5733'}}}/>
@@ -54,7 +57,14 @@ const ChatScreen = (props) => {
             onSend={handleSend}
             renderBubble={renderBubble}
             placeholder="Escribe tu mensaje aquí..."
-            listViewProps={{style: {backgroundColor: '#003748'}}}
+            listViewProps={{style: {backgroundColor: '#003348'}}}
+            renderSend={(props) => {
+                return(
+                    <Send {...props}>
+                        <Ionicons name="md-caret-forward-outline" style={{marginRight: '3%', paddingBottom: '2%'}} size={40} color="#003348" ></Ionicons>
+                    </Send>            
+                )
+            }}
             user={{
                 _id: auth?.currentUser?.email ,
                 name: auth?.currentUser?.displayName,
