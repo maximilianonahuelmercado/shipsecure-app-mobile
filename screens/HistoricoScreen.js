@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons'
 const HistoricoScreen = ({navigation}) => {
 
     const [users, setUsers] = useState()
-    const entityRef =db.collection('envios')
+    const entityRef =db.collection('historicos')
 
     useLayoutEffect(()=>{
       navigation.setOptions({
@@ -48,7 +48,7 @@ const HistoricoScreen = ({navigation}) => {
                     <SafeAreaView>
                       <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={{ height: '100%', justifyContent: 'space-evenly', backgroundColor: "#2E4B5B"}}>
-                        <Text style={HistoricoStyles.texto}>{item.fechaEntrega}</Text>
+                        <Text style={HistoricoStyles.texto}>{item.fecha}</Text>
                         <Text style={HistoricoStyles.texto}>{item.direccion}</Text>
                         <Text style={HistoricoStyles.texto}>{item.localidad}</Text>
                         <Text style={HistoricoStyles.texto}>{item.provincia}</Text>

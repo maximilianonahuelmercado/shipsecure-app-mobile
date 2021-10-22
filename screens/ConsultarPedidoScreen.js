@@ -4,14 +4,7 @@ import ConsultarPedidoStyles from '../styles/ConsultarPedidoStyles'
 import { Ionicons } from '@expo/vector-icons'
 
 const ConsultarPedidoScreen = ({navigation}) => {
-    const [state, setState] = useState({
-        nroPedido: "",
-    })
-
-
-const handleChangeText = (nroPedido, value) => {
-    setState({...state, [nroPedido]: value})
-}
+   const [idPedido, setIdPedido] = useState('')
 
     return (
         <ScrollView style={ConsultarPedidoStyles.container}>
@@ -23,10 +16,10 @@ const handleChangeText = (nroPedido, value) => {
                 <Text style={{marginLeft: 5, color:"#FF5733", fontWeight:'bold', fontSize:12}}>El código de envío te lo enviaremos por correo</Text>
             </View>
             <View>
-                <TextInput style={ConsultarPedidoStyles.input} placeholder="Código de envío" placeholderTextColor="#687D87" onChangeText={(value) => handleChangeText('nroPedido', value)}></TextInput>
+                <TextInput style={ConsultarPedidoStyles.input} placeholder="Código de envío" placeholderTextColor="#687D87" onChangeText={(value) => setIdPedido(value)}></TextInput>
             </View>
             <View style={ConsultarPedidoStyles.botonConsultar}>
-                <Button color="#08AFA5"  title="Consultar" onPress={() => navigation.navigate('Pedido', {nroPedido: JSON.parse(state.nroPedido)})}></Button>
+                <Button color="#08AFA5"  title="Consultar" onPress={() => navigation.navigate('Pedido', {nroPedido: idPedido})}></Button>
             </View>
         </ScrollView>
     )

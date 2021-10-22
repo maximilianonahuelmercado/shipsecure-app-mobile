@@ -23,7 +23,8 @@ const PedidoScreen = (props) => {
           })
           
         const subscriber = entityRef.where("id", "==", pedidoID).get().then(querySnapshot => {
-            querySnapshot.forEach(documentSnapshot => {
+            if(!querySnapshot.empty){
+                querySnapshot.forEach(documentSnapshot => {
   
                     if(documentSnapshot.data().email === auth?.currentUser?.email){
                         const pedidos = []
@@ -36,9 +37,15 @@ const PedidoScreen = (props) => {
                     else{
                         //En caso de no encontrar el codigo vuelve a la pantalla UserHomeScreen hasta que ponga el id de envio valido
                         props.navigation.navigate('ConsultarPedido')
-                        alert('Codigo de envío inválido o no pertenece a ninguno de sus pedidos')
+                        alert('El Codigo de envío no pertenece a ninguno de sus pedidos')
                     }
                  })    
+
+            }
+            else{
+                props.navigation.navigate('ConsultarPedido')
+                alert('El código de envío no existe')
+            }
            })
     }, [])
     
@@ -83,7 +90,7 @@ const PedidoScreen = (props) => {
                         <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {idPedido: pedidoID})}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                        <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID})}></Ionicons>
+                        <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID, fecha: item.fechaEntrega, direccion: item.direccion, localidad: item.localidad, provincia: item.provincia, email: item.email})}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
                         <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega, precio: item.precio})}></FontAwesome>
