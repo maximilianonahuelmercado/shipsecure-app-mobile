@@ -76,11 +76,11 @@ const PedidoScreen = (props) => {
                 </View>
                 <View>
                     <Text style={PedidoStyles.inputLabelTitulo}>Peso</Text>
-                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.peso}</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.peso} Kg</Text>
                 </View>
                 <View>
                     <Text style={PedidoStyles.inputLabelTitulo}>Temperatura</Text>
-                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.temperatura}</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.temperatura} C°</Text>
                 </View>
                 <View style={PedidoStyles.botonMapa}>
                     <Button color="#08AFA5" title="Ver Mapa" onPress={() => props.navigation.navigate('SeguirPedido', {idPedido: pedidoID})}></Button>

@@ -8,6 +8,7 @@ import { rt, db, auth }  from '../database/firebase'
 const QRScannerScreen = (props) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [ok, setOk] = useState(false);
   const [qr, setQR] = useState('')
   const [isModalVisible, setModalVisible] = useState(true);
   const envioRef = db.collection('envios')
@@ -29,7 +30,7 @@ const QRScannerScreen = (props) => {
       const qr = snapshot.val().idQR
       setQR(qr)
       console.log(qr)
-    })   
+    })
   }, [])
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const QRScannerScreen = (props) => {
       console.log("data: " + data)
       if(qr === data && idPedido === qr && email === auth?.currentUser?.email ){
         rt.ref('envio').update({
-          puerta: true
+          puerta: false
         })
         historicoRef.doc(idPedido).set({
           id: idPedido,
@@ -58,6 +59,7 @@ const QRScannerScreen = (props) => {
           email: email
         })
         envioRef.doc(idPedido).delete()
+        setOk(true)
       }
       else{
         alert('El codigo no corresponde al pedido asociado')
@@ -81,17 +83,21 @@ const QRScannerScreen = (props) => {
                   <View style={QRScannerStyles.boton}>
                     <Button color="#08AFA5"  title={'Presiona para escanear de nuevo'} onPress={() => setScanned(false)} />
                   </View>
-                    <Modal isVisible={isModalVisible}>
-                      <View style={QRScannerStyles.modal}>
-                          <Text style={QRScannerStyles.texto}>Su código ha sido confirmado con éxito</Text> 
-                          <Text style={QRScannerStyles.gratitud}>¡Gracias por usar ShipSecure!</Text>
-                          <View style={QRScannerStyles.modalCaja}>
+                  {
+                    ok && <View>
+                              <Modal isVisible={isModalVisible}>
+                                <View style={QRScannerStyles.modal}>
+                                    <Text style={QRScannerStyles.texto}>Su código ha sido confirmado con éxito</Text> 
+                                    <Text style={QRScannerStyles.gratitud}>¡Gracias por usar ShipSecure!</Text>
+                                    <View style={QRScannerStyles.modalCaja}>
+                                    </View>
+                                    <View>
+                                        <Button color="#08AFA5" title="VOLVER" onPress={()=> props.navigation.navigate('Home')} />
+                                    </View>
+                                </View>
+                              </Modal> 
                           </View>
-                          <View>
-                              <Button color="#08AFA5" title="VOLVER" onPress={()=> props.navigation.navigate('Home')} />
-                          </View>
-                      </View>
-                    </Modal> 
+                  }
                   </View>
                   }
     </View>

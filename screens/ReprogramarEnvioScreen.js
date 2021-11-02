@@ -5,6 +5,8 @@ import ReprogramarEnvioStyles from '../styles/ReprogramarEnvioStyles'
 import {CheckBox} from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import { db }  from '../database/firebase'
+import moment from 'moment'
+import 'moment/locale/es'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 
@@ -68,8 +70,8 @@ const ReprogramarEnvioScreen = (props) => {
     const updateEnvio = () => {
         entityRef.doc(idPedido).update({
             direccion: direccion,
-            fechaEntrega: date.toLocaleDateString("es-AR"),
-            horaEntrega: hour.toLocaleTimeString("es-AR"),
+            fechaEntrega: moment(date).locale('es').format('L'),
+            horaEntrega: moment(hour).locale('es').format('LT'),
             observaciones: descripcion,
             precio: parseFloat(precio) + 150
         }).then(()=>{alert('Actualizacion Correcta!')})
@@ -104,7 +106,7 @@ const ReprogramarEnvioScreen = (props) => {
             <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
                 <View style={{flexDirection: 'row'}}>
                     <Ionicons name="calendar-outline" size={25} onPress={showDatepicker} color="#FF5733" style={ReprogramarEnvioStyles.icono}></Ionicons>
-                        <Text style={ReprogramarEnvioStyles.fecha}>{date.toLocaleDateString('es-AR')}</Text>
+                        <Text style={ReprogramarEnvioStyles.fecha}>{moment(date).locale('es').format('L')}</Text>
                         {show && (
                             <DateTimePicker
                             testID="dateTimePicker"
@@ -118,7 +120,7 @@ const ReprogramarEnvioScreen = (props) => {
                 </View>
                 <View style={{flexDirection: 'row'}}>
                     <Ionicons name="time" size={25} onPress={showTimePicker} color="#FF5733" style={ReprogramarEnvioStyles.icono}></Ionicons>
-                    <Text style={ReprogramarEnvioStyles.fecha}>{hour.toLocaleTimeString('es-AR')}</Text>
+                    <Text style={ReprogramarEnvioStyles.fecha}>{moment(hour).locale('es').format('LT')}</Text>
                     {showTime && (
                         <DateTimePicker
                         testID="TimePicker"

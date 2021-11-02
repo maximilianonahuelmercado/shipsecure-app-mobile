@@ -8,6 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Picker } from '@react-native-picker/picker'
 import Modal from 'react-native-modal'
+import moment from 'moment'
+import 'moment/locale/es'
 import * as region from '../assets/constants/regiones.json'
 import * as costos from '../assets/constants/precios.json'
 
@@ -38,7 +40,7 @@ const CrearEnvioScreen = (props) => {
     const [showTime, setShowTime] = useState(false);
     const [flag, setFlag] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
-    const [nivel, setNivel] = useState(0);
+    //const [nivel, setNivel] = useState(0);
     const [puntos, setPuntos]  = useState(0);
     const [id, setId] = useState("");
     
@@ -55,6 +57,23 @@ const CrearEnvioScreen = (props) => {
             })
         })
     }, [])*/
+
+
+    useEffect(()=>{
+
+    },[isSelected])
+
+    useEffect(()=>{
+
+    },[precio])
+
+    useEffect(()=>{
+        console.log(puntos)
+    },[puntos])
+
+    useEffect(()=>{
+
+    }, [email])
 
 
     const toggleModal = () => {
@@ -95,19 +114,33 @@ const CrearEnvioScreen = (props) => {
         setFlag(true)
       }
     
-    
-     const calcularEnvio = () => {
 
+      useEffect(()=>{
+          
         usuariosRef.where("email", "==", email).onSnapshot(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
-               const nvl = documentSnapshot.data().nivel
+               //const nvl = documentSnapshot.data().nivel
                const ptos = documentSnapshot.data().puntos
                const idUsuario = documentSnapshot.data()._id
-               setNivel(nvl)
+               //setNivel(nvl)
                setPuntos(ptos)
                setId(idUsuario)
             })
         })
+      })
+    
+     const calcularEnvio = () => {
+
+       /* usuariosRef.where("email", "==", email).onSnapshot(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+               //const nvl = documentSnapshot.data().nivel
+               const ptos = documentSnapshot.data().puntos
+               const idUsuario = documentSnapshot.data()._id
+               //setNivel(nvl)
+               setPuntos(ptos)
+               setId(idUsuario)
+            })
+        })*/
 
         var pesos = 0.00
         /*Calculo costos de caja en base al peso*/
@@ -135,36 +168,40 @@ const CrearEnvioScreen = (props) => {
         else{
             pesos = pesos + costos.R5
         }
-        /*Calculo descuento en base al nivel*/
+        /*Calculo descuento en base a los puntos*/
         var descuento = 0.00
-        if(nivel === 1){
+        if(puntos < 15){
             descuento = pesos * 0.05
         }
-        else if(nivel === 2)
+        else if(puntos < 35)
         {
             descuento = pesos * 0.10
         }
-        else if(nivel === 3)
+        else if(puntos < 55)
         {
             descuento = pesos * 0.15
         }
-        else if(nivel === 4)
+        else if(puntos < 75)
         {
             descuento = pesos * 0.20
         }
-        else if(nivel === 5)
+        else if(puntos < 90)
         {
             descuento = pesos * 0.30
         }
-        else if(nivel === 6)
+        else if(puntos < 99)
         {
             descuento = pesos * 0.40
         }
-        else if(nivel === 7){
+        else
+        {
             descuento = pesos * 0.50
         }
         /*Calculo si es reprogramado*/
         if (isSelected){
+            console.log(pesos)
+            console.log(costos.precioProgramado)
+            console.log(descuento)
             pesos = pesos + costos.precioProgramado - descuento
         }
         else{
@@ -190,9 +227,9 @@ const CrearEnvioScreen = (props) => {
         }
         else{
             //generamos un random de 6 digitos para el id de envio
-            const idDoc = (100000 + Math.floor(Math.random() * 900000)).toString()
+            //const idDoc = (100000 + Math.floor(Math.random() * 900000)).toString()
             //Para test rapido
-            //const idDoc = "999999"
+            const idDoc = "800001"
             entityRef.doc(idDoc).set({
                 id: idDoc,
                 nombres: nombre,
@@ -205,8 +242,8 @@ const CrearEnvioScreen = (props) => {
                 codigoPostal: codigoPostal,
                 provincia: provincia,
                 observaciones: observaciones ? observaciones : "N/A",
-                fechaEntrega: date.toLocaleDateString("es-AR"),
-                horaEntrega: flag ? hour.toLocaleTimeString("es-AR") : "9:00 - 20:00",
+                fechaEntrega: moment(date).locale('es').format('L'),
+                horaEntrega: flag ? moment(hour).locale('es').format('LT') : "9:00 - 20:00",
                 peso: parseInt(peso),
                 temperatura: parseInt(temperatura),
                 precio: precio,
@@ -222,8 +259,8 @@ const CrearEnvioScreen = (props) => {
 
             /*Agrego puntos al usuario*/
             usuariosRef.doc(id).update({
-                puntos: puntos + 5,
-                nivel: (puntos + 5) < 15 ? 1 :  (puntos + 5) < 35 ? 2 : (puntos + 5) < 55 ? 3 : (puntos + 5) < 75 ? 4 : (puntos + 5) < 90 ? 5 : (puntos + 5) < 99 ? 6 : 7
+                puntos: (puntos + 5) > 100 ? 100 : (puntos + 5),
+                //nivel: (puntos + 5) < 15 ? 1 :  (puntos + 5) < 35 ? 2 : (puntos + 5) < 55 ? 3 : (puntos + 5) < 75 ? 4 : (puntos + 5) < 90 ? 5 : (puntos + 5) < 99 ? 6 : 7
             })
             props.navigation.navigate("EnvioCreado")
         }
@@ -320,7 +357,7 @@ const CrearEnvioScreen = (props) => {
                 <Text style={CrearEnvioStyles.label}>Fecha de entrega</Text>
                 <View style={{flexDirection:'row'}}> 
                     <Ionicons name="calendar-outline" size={25} onPress={showDatepicker} color="#FF5733" style={CrearEnvioStyles.icono}></Ionicons>
-                        <Text style={CrearEnvioStyles.fecha}>{date.toLocaleDateString('es-AR')}</Text>
+                        <Text style={CrearEnvioStyles.fecha}>{moment(date).locale('es').format('L')}</Text>
                         {show && (
                             <DateTimePicker
                             testID="dateTimePicker"
@@ -335,7 +372,7 @@ const CrearEnvioScreen = (props) => {
                 <Text style={CrearEnvioStyles.label}>Hora de entrega</Text>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="time" size={25} onPress={showTimePicker} color="#FF5733" style={CrearEnvioStyles.icono}></Ionicons>
-                    <Text style={CrearEnvioStyles.fecha}>{hour.toLocaleTimeString('es-AR')}</Text>
+                    <Text style={CrearEnvioStyles.fecha}>{moment(hour).locale('es').format('LT')}</Text>
                     {showTime && (
                         <DateTimePicker
                         testID="TimePicker"

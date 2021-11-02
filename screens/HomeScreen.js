@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeStyles from '../styles/HomeStyles';
 import { TouchableOpacity } from 'react-native';
 import * as WebBrowser from 'expo-web-browser'
-import { db, auth } from '../database/firebase';
+import { db, auth, nt } from '../database/firebase';
 import { useIsFocused } from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
@@ -17,7 +17,6 @@ const HomeScreen = ({navigation}) => {
 
     //Para poder cambiar el alias cada vez que la edito
     //const isFocused = useIsFocused()
-
 
     useLayoutEffect(()=>{
         navigation.setOptions({
