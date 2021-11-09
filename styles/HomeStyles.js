@@ -67,6 +67,40 @@ export default StyleSheet.create(
             marginTop: 10,
             marginBottom: 5,
             color: '#FFF'
+        },
+        modal: {
+            
+            alignSelf: 'center',
+            backgroundColor: '#003348',
+            width: "90%",
+            height: "30%",
+            alignItems: "center",
+            justifyContent: "center",
+        },
+        modalText: {
+            padding: 30,
+            paddingTop: 0,
+            color: '#000',
+            fontSize: 17,
+            fontWeight: 'bold',
+            marginBottom: '20%'
+        },
+        modalTextAclaracion:{
+            marginBottom: '5%',
+            paddingLeft: 10,
+            color: '#000',
+            fontSize: 15,
+            fontWeight: 'bold',
+        },
+        modalCaja:{
+            
+            alignSelf: 'flex-start',
+            marginBottom: '20%'
+        },
+        modalTextCamposObligatorios:{
+            alignSelf: 'center',
+            color: '#FFF',
+            fontSize: 20,
         }
     }
 )

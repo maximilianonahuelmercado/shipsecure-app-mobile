@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { View, SafeAreaView, ScrollView, Text, Button, TextInput } from 'react-native'
 import { auth } from '../database/firebase';
 import LoginStyles from '../styles/LoginStyles';
+import Modal from 'react-native-modal'
 import { Ionicons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [hidePass, setHidePass] = useState(true);
+    const [modalLogin ,setModalLogin] = useState(false);
 
     const signIn = () => {
         auth.signInWithEmailAndPassword(email, password)
             .catch((error) => {
-                var errorMessage = error.message;
-                alert(errorMessage)
+               console.log(error)
+               setModalLogin(true)
             });
     }
     useEffect(() => {
@@ -29,6 +31,10 @@ const LoginScreen = ({ navigation }) => {
 
         return unsubscribe
     }, [])
+
+    const toggleModalLogin = () => {
+        setModalLogin(!modalLogin)
+    }
 
     return (
         <SafeAreaView style={LoginStyles.container}> 
@@ -71,6 +77,17 @@ const LoginScreen = ({ navigation }) => {
                             ¿No tienes cuenta?<Text style={LoginStyles.toRegistro} onPress={()=>navigation.navigate('Registro')}> Registrarse</Text>
                         </Text>      
                     </View>
+                    <Modal isVisible={modalLogin}>
+                        <View style={LoginStyles.modal}>
+                            <Ionicons name="sad-outline" size={150} color="#FF5733"></Ionicons>
+                            <Text style={LoginStyles.modalTextCamposObligatorios}>Problema iniciando sesión{"\n"}Verifica tus credenciales</Text>
+                            <View style={LoginStyles.modalCaja}>
+                            </View>
+                            <View>
+                                <Button color="#08AFA5" title="VOLVER" onPress={toggleModalLogin} />
+                            </View>
+                        </View>
+                    </Modal>
             </ScrollView>
         </SafeAreaView>
     )

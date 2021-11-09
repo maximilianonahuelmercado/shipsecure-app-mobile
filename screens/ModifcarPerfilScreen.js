@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react'
-import { View,TextInput, SafeAreaView, ScrollView, Text, Button, Alert } from 'react-native'
+import { View,TextInput, SafeAreaView, ScrollView, Text, Button } from 'react-native'
 import {CheckBox} from 'react-native-elements'
 import { db, auth} from '../database/firebase';
 import { Ionicons } from '@expo/vector-icons';
+import Modal from 'react-native-modal'
 import { useNavigation } from '@react-navigation/core';
 import ModificarPerfilStyles from '../styles/ModificarPerfilStyles'
 
@@ -17,10 +18,13 @@ const ModificarPerfilScreen = ({navigation}) => {
     const [confRepassword, setConfRepassword] = useState('');
     const [isSelected, setSelection] = useState(false)
 
+    const [modalPassword ,setModalPassword] = useState(false);
 
     const entityRef = db.collection("usuarios")
     
-
+    const toggleModalPassword = () => {
+        setModalPassword(!modalPassword)
+    }
 
     useLayoutEffect(()=>{
         navigation.setOptions({
@@ -37,7 +41,7 @@ const ModificarPerfilScreen = ({navigation}) => {
                 auth.currentUser.updatePassword(repassword).then(function (){
                     auth.signOut().then(()=>{  
                         navigation.navigate("Login")
-                        alert('La contraseña ha sido actualizada por favor volver a ingresar a la aplicacion')
+                        console.log('La contraseña ha sido actualizada por favor volver a ingresar a la aplicacion')
                     })
                 }).catch((error) => {
                     alert(error)
@@ -125,6 +129,21 @@ const ModificarPerfilScreen = ({navigation}) => {
                             <Button color="#08AFA5" title="Actualizar"
                              onPress={updateUser}></Button>
                         </View>
+                        <View style={ModificarPerfilStyles.botonActualizar}>
+                            <Button color="#08AFA5" title="Eliminar Usuario"></Button>
+                        </View>
+                        <Modal isVisible={modalPassword}>
+                        <View style={ModificarPerfilStyles.modal}>
+                                <Ionicons name="sad-outline" size={150} color="#FF5733"></Ionicons>
+                                <Text style={ModificarPerfilStyles.modalTextCamposObligatorios}>Las passwords no coinciden</Text>
+                                <View style={ModificarPerfilStyles.modalCaja}>
+                                </View>
+                                <View>
+                                    <Button color="#08AFA5" title="VOLVER" onPress={toggleModalPassword} />
+                                </View>
+                            </View>
+                    </Modal>
+                    
                 </ScrollView>
             </SafeAreaView>
     )

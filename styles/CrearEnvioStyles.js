@@ -79,7 +79,7 @@ export default StyleSheet.create(
         },
         modal: {
             alignSelf: 'center',
-            backgroundColor: '#FFF',
+            backgroundColor: '#003348',
             width: "90%",
             height: "50%",
             alignItems: "center",
@@ -95,7 +95,7 @@ export default StyleSheet.create(
         },
         modalTextAclaracion:{
             paddingLeft: 10,
-            color: '#000',
+            color: '#FFF',
             fontSize: 10,
             fontWeight: 'bold',
         },
@@ -103,5 +103,10 @@ export default StyleSheet.create(
             
             alignSelf: 'flex-start',
             marginBottom: '20%'
+        },
+        modalTextCamposObligatorios:{
+            alignSelf: 'center',
+            color: '#FFF',
+            fontSize: 20,
         },
     })

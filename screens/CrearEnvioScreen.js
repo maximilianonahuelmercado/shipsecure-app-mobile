@@ -40,6 +40,7 @@ const CrearEnvioScreen = (props) => {
     const [showTime, setShowTime] = useState(false);
     const [flag, setFlag] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
+    const [modalDatos ,setModalDatos] = useState(false);
     //const [nivel, setNivel] = useState(0);
     const [puntos, setPuntos]  = useState(0);
     const [id, setId] = useState("");
@@ -82,6 +83,10 @@ const CrearEnvioScreen = (props) => {
         return calcularEnvio()
       }
     };
+
+    const toggleModalDatos = () => {
+        setModalDatos(!modalDatos)
+    }
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -223,7 +228,7 @@ const CrearEnvioScreen = (props) => {
         calcularEnvio()
         //vaidacion previa de campos no nulos
         if( nombre === '' || apellido === '' || dni === '' || direccion === '' || localidad === '' || codigoPostal === '' || provincia === '' || peso === '' || temperatura === ''){
-            alert("Hay campos sin completar!")
+            setModalDatos(true)
         }
         else{
             //generamos un random de 6 digitos para el id de envio
@@ -274,26 +279,26 @@ const CrearEnvioScreen = (props) => {
                 <Text style={CrearEnvioStyles.titulo}>DATOS DE CONTACTO</Text>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Nombres</Text>
+                <Text style={CrearEnvioStyles.label}>Nombres (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={nombre} onChangeText={(text)=>setNombre(text)}></TextInput>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Apellidos</Text>
+                <Text style={CrearEnvioStyles.label}>Apellidos (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={apellido} onChangeText={(text)=>setApellido(text)}></TextInput>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>DNI</Text>
+                <Text style={CrearEnvioStyles.label}>DNI (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} placeholderTextColor="#687D87" value={dni} onChangeText={(text)=>setDNI(text)}></TextInput>     
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Email</Text>
+                <Text style={CrearEnvioStyles.label}>Email (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={email} onChangeText={(text)=>setEmail(text)}></TextInput>
             </View>
             <View>
                 <Text style={CrearEnvioStyles.titulo}>DATOS DE ENVÍO</Text>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Dirección</Text>
+                <Text style={CrearEnvioStyles.label}>Dirección (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={direccion} onChangeText={(text)=>setDireccion(text)}></TextInput> 
             </View>
             <View>
@@ -302,15 +307,15 @@ const CrearEnvioScreen = (props) => {
             </View>
           
             <View>
-                <Text style={CrearEnvioStyles.label}>Código Postal</Text>
+                <Text style={CrearEnvioStyles.label}>Código Postal (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} autoCompleteType={'postal-code'} value={codigoPostal} onChangeText={(text)=>setCodigoPostal(text)}></TextInput>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Localidad</Text>
+                <Text style={CrearEnvioStyles.label}>Localidad (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={localidad} onChangeText={(text)=>setLocalidad(text)}></TextInput>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Provincia</Text>
+                <Text style={CrearEnvioStyles.label}>Provincia (*)</Text>
                 <Picker  
                     style={CrearEnvioStyles.picker}
                     selectedValue={provincia}    
@@ -390,11 +395,11 @@ const CrearEnvioScreen = (props) => {
                 <Text style={CrearEnvioStyles.titulo}>DATOS DE PEDIDO</Text>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Peso (en Kg)</Text>
+                <Text style={CrearEnvioStyles.label}>Peso (en g) (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={peso} onChangeText={(text)=>setPeso(text)}></TextInput>
             </View>
             <View>
-                <Text style={CrearEnvioStyles.label}>Temperatura (en C°)</Text>
+                <Text style={CrearEnvioStyles.label}>Temperatura (en C°) (*)</Text>
                 <TextInput style={CrearEnvioStyles.input} value={temperatura} onChangeText={(text)=>setTemperatura(text)}></TextInput>
             </View>
             <View  style={CrearEnvioStyles.botonCalcular}>
@@ -414,6 +419,17 @@ const CrearEnvioScreen = (props) => {
             <View style={CrearEnvioStyles.botonCrearEnvio}>
                 <Button color="#08AFA5"  title="CONFIRMAR ENVÍO" onPress={ () => addEnvio()}></Button>
             </View>
+            <Modal isVisible={modalDatos}>
+                <View style={CrearEnvioStyles.modal}>
+                    <Ionicons name="sad-outline" size={150} color="#FF5733"></Ionicons>
+                    <Text style={CrearEnvioStyles.modalTextCamposObligatorios}>Los campos (*) son obligatorios</Text>
+                    <View style={CrearEnvioStyles.modalCaja}>
+                    </View>
+                    <View>
+                        <Button color="#08AFA5" title="VOLVER" onPress={toggleModalDatos} />
+                    </View>
+                </View>
+            </Modal>
         </ScrollView>
     </SafeAreaView>
     )

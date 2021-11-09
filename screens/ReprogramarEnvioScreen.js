@@ -1,10 +1,11 @@
-import React, {useState } from 'react';
+import React, {useState, useEffect } from 'react';
 import { View, Text, ScrollView, Button, TextInput, SafeAreaView, Platform} from 'react-native'
 import { MaterialIcons  } from '@expo/vector-icons'
 import ReprogramarEnvioStyles from '../styles/ReprogramarEnvioStyles'
 import {CheckBox} from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
-import { db }  from '../database/firebase'
+import { db, rt }  from '../database/firebase'
+import Modal from 'react-native-modal'
 import moment from 'moment'
 import 'moment/locale/es'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -19,7 +20,7 @@ const ReprogramarEnvioScreen = (props) => {
     const idPedido = (props.route.params.idPedido).toString()
     const direccionOriginal = (props.route.params.direccion).toString()
     const observaciones = (props.route.params.observaciones).toString()
-    const precio = (props.route.params.precio).toString()
+    const costo = (props.route.params.costo).toString()
 
     //Hooks para el checkbox
     const [isSelected, setIsSelected] = useState(false)
@@ -33,6 +34,8 @@ const ReprogramarEnvioScreen = (props) => {
     const [mode, setMode] = useState('date');
     const [showTime, setShowTime] = useState(false);
     const [flag, setFlag] = useState(false);
+
+    const [isModalVisible, setModalVisible] = useState(false);
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -65,18 +68,47 @@ const ReprogramarEnvioScreen = (props) => {
         setFlag(true)
       }
 
-    //console.log(JSON.stringify(props.route.params.idPedido))
+    useEffect(()=>{
+
+    },[isSelected])
+
+    
+    useEffect(()=>{
+
+    },[isSelectedDirection])
+
+    useEffect(()=>{
+    },[isModalVisible])
 
     const updateEnvio = () => {
-        entityRef.doc(idPedido).update({
+        if(isSelected){
+            entityRef.doc(idPedido).update({
             direccion: direccion,
             fechaEntrega: moment(date).locale('es').format('L'),
             horaEntrega: moment(hour).locale('es').format('LT'),
             observaciones: descripcion,
-            precio: parseFloat(precio) + 150
-        }).then(()=>{alert('Actualizacion Correcta!')})
+            costo: parseFloat(costo) + 150
+        }).then(()=>{
+            rt.ref('/notificacion').update({
+                fueReprogramado: true
+            })
+            setModalVisible(!isModalVisible);
+        })
+        }else{
+            entityRef.doc(idPedido).update({
+            direccion: direccion,
+            observaciones: descripcion,
+            costo: parseFloat(costo) + 150
+        }).then(()=>{
+            
+        //alert('Actualizacion Correcta!')
+        rt.ref('/notificacion').update({
+            fueReprogramado: true
+        })
+            setModalVisible(!isModalVisible);
+        })
+        }
         
-        props.navigation.navigate("Home")
     }
 
     return (
@@ -141,6 +173,19 @@ const ReprogramarEnvioScreen = (props) => {
             <View style={ReprogramarEnvioStyles.botonEnviar}>
                 <Button color="#08AFA5" title="Enviar" onPress={ () => updateEnvio()}></Button>
             </View>
+            <Modal isVisible={isModalVisible}>
+                <View style={ReprogramarEnvioStyles.modal}>
+                        <View style={{flexDirection: 'row', justifyContent:'center'}}>
+                            <Ionicons name="checkmark-circle" size={150} color="#08AFA5"></Ionicons>
+                        </View>
+                        <Text style={ReprogramarEnvioStyles.modalTextAclaracion}>ENVIO REPROGRAMADO</Text>
+                        <View style={ReprogramarEnvioStyles.modalCaja}>
+                        </View>
+                        <View>
+                            <Button color="#08AFA5" title="VOLVER" onPress={()=>props.navigation.navigate("Home")} />
+                        </View>
+                </View>
+            </Modal>
         </ScrollView>
     </SafeAreaView>
     )

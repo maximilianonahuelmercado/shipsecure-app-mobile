@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, Text, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Button} from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
 import { rt, db, auth }  from '../database/firebase'
 import PedidoStyles from '../styles/PedidoStyles'
 import { Ionicons  , FontAwesome } from '@expo/vector-icons';
 
 const PedidoScreen = (props) => {
 
-
     const [pedido, setPedido] = useState([])
     const [sensor, setSensor] = useState({})
     const pedidoID = (props.route.params.nroPedido).toString()
     const entityRef = db.collection('envios')
+
+
+    useEffect(()=>{
+        console.log(pedido)
+    }, [pedido])
 
     useEffect(()=>{
 
@@ -76,24 +81,24 @@ const PedidoScreen = (props) => {
                 </View>
                 <View>
                     <Text style={PedidoStyles.inputLabelTitulo}>Peso</Text>
-                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.peso} Kg</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{parseInt(sensor.peso)} g</Text>
                 </View>
                 <View>
                     <Text style={PedidoStyles.inputLabelTitulo}>Temperatura</Text>
-                    <Text style={PedidoStyles.inputLabelDatos}>{sensor.temperatura} C°</Text>
+                    <Text style={PedidoStyles.inputLabelDatos}>{parseInt(sensor.temperatura)} C°</Text>
                 </View>
                 <View style={PedidoStyles.botonMapa}>
                     <Button color="#08AFA5" title="Ver Mapa" onPress={() => props.navigation.navigate('SeguirPedido', {idPedido: pedidoID})}></Button>
                 </View>
                 <View style={{paddingTop: 10, flexDirection: "row", justifyContent: 'space-evenly'}}>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                        <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {idPedido: pedidoID})}></Ionicons>
+                        <Ionicons name="chatbubbles" size={50} color="#003748" onPress={() => props.navigation.navigate('Chat', {idPedido: pedidoID, email: item.email})}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
                         <Ionicons name="qr-code-outline" size={50} color="#003748" onPress={() => props.navigation.navigate("QRScanner", {idPedido: pedidoID, fecha: item.fechaEntrega, direccion: item.direccion, localidad: item.localidad, provincia: item.provincia, email: item.email})}></Ionicons>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ borderWidth:1, borderColor: '#08AFA5', alignItems:'center', justifyContent:'center', width:75, height:75, backgroundColor:'#08AFA5', borderRadius:50}}>
-                        <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega, precio: item.precio})}></FontAwesome>
+                        <FontAwesome name="pencil-square" size={50} color="#003748" onPress={() => props.navigation.navigate("ReprogramarEnvio", {idPedido: pedidoID, direccion: item.direccion, observaciones: item.observaciones, fechaEntrega: item.fechaEntrega, horaEntrega: item.horaEntrega, costo: item.costo})}></FontAwesome>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

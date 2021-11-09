@@ -6,12 +6,15 @@ import HomeStyles from '../styles/HomeStyles';
 import { TouchableOpacity } from 'react-native';
 import * as WebBrowser from 'expo-web-browser'
 import { db, auth, nt } from '../database/firebase';
+import Modal from 'react-native-modal'
 import { useIsFocused } from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
 
     const [alias, setAlias] = useState("")
     const [show, setShow] = useState(false);
+
+    const [modalLogout, setModalLogout] = useState(false)
 
     const entityRef = db.collection("usuarios")
 
@@ -28,6 +31,11 @@ const HomeScreen = ({navigation}) => {
             )
         })
     })
+
+    
+    const toggleModalLogout = () => {
+        setModalLogout(!modalLogout)
+    }
 
     useEffect(()=>{/*
         console.log(auth.currentUser.displayName)
@@ -61,9 +69,10 @@ const HomeScreen = ({navigation}) => {
     const signOut = () => {
         auth.signOut().then(() => {
             // Sign-out successful.
+            //setModalLogout(true)
             navigation.replace('Login')
         }).catch((error) => {
-            alert('Se ha desconectado')
+            //setModalLogout(true)
             navigate.replace('Login')
         });
     }
@@ -77,7 +86,7 @@ const HomeScreen = ({navigation}) => {
      <SafeAreaView style={HomeStyles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={HomeStyles.avatar}>
-                <Avatar rounded size={200} source={{uri: auth?.currentUser?.photoURL}}></Avatar>
+                <Avatar rounded size={200} source={auth?.currentUser?.photoURL ? {uri: auth?.currentUser?.photoURL} : {uri: "https://i.ibb.co/jGwMwn4/Microsoft-Teams-image.png"}}></Avatar>
             </View>
             <View >
                 <Text style={HomeStyles.saludo}>¡Hola {alias ? alias : auth?.currentUser?.displayName}!</Text>
@@ -114,6 +123,17 @@ const HomeScreen = ({navigation}) => {
             <View style={HomeStyles.botonChatBot}>
                 <Button color="#08AFA5" title="Chatear" onPress={_handleOpenChatBot}></Button>
             </View>
+            <Modal isVisible={modalLogout}>
+                        <View style={HomeStyles.modal}>
+                            <Ionicons name="person" size={150} color="#003348"></Ionicons>
+                            <Text style={HomeStyles.modalTextCamposObligatorios}>¡Se ha creado su cuenta con éxito!{"\n"} Por favor ingrese con sus credenciales</Text>
+                            <View style={HomeStyles.modalCaja}>
+                            </View>
+                            <View>
+                                <Button color="#08AFA5" title="VOLVER" onPress={toggleModalLogout} />
+                            </View>
+                        </View>
+            </Modal>
         </ScrollView>
     </SafeAreaView>
     )
