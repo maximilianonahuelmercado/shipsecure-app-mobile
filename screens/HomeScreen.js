@@ -27,7 +27,7 @@ const HomeScreen = ({navigation}) => {
                 <Ionicons size={40} name="menu" style={{paddingLeft:15}} onPress={()=>navigation.openDrawer()}></Ionicons>
             ),
             headerRight:()=>(
-                <Ionicons size={35} name="log-out" style={{paddingRight:15}} onPress={signOut}></Ionicons>
+                <Ionicons size={35} name="log-out" style={{paddingRight:15}} onPress={toggleModalLogout}></Ionicons>
             )
         })
     })
@@ -125,11 +125,14 @@ const HomeScreen = ({navigation}) => {
             </View>
             <Modal isVisible={modalLogout}>
                         <View style={HomeStyles.modal}>
-                            <Ionicons name="person" size={150} color="#003348"></Ionicons>
-                            <Text style={HomeStyles.modalTextCamposObligatorios}>¡Se ha creado su cuenta con éxito!{"\n"} Por favor ingrese con sus credenciales</Text>
+                            <Ionicons name="exit" size={150} color="#08AFA5"></Ionicons>
+                            <Text style={HomeStyles.modalTextCamposObligatorios}>¿Cerrar sesión?</Text>
                             <View style={HomeStyles.modalCaja}>
                             </View>
-                            <View>
+                            <View style={{flexDirection: 'row'}}>
+                                <View style={{paddingRight: '10%'}}>
+                                    <Button color="#08AFA5" title="SALIR" onPress={signOut} />
+                                </View>
                                 <Button color="#08AFA5" title="VOLVER" onPress={toggleModalLogout} />
                             </View>
                         </View>

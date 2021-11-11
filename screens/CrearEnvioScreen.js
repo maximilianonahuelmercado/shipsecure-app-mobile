@@ -407,10 +407,11 @@ const CrearEnvioScreen = (props) => {
             </View>
             <Modal isVisible={isModalVisible}>
                 <View style={CrearEnvioStyles.modal}>
-                    <Text style={CrearEnvioStyles.modalTextAclaracion}>(*)En caso de tener descuento el mismo se ve reflejado en el precio final</Text>
+                    <Ionicons name="card" size={150} color="#08AFA5"></Ionicons>
                     <View style={CrearEnvioStyles.modalCaja}>
                     </View>
-                    <Text style={CrearEnvioStyles.modalText}>El precio es de {precio}.00$ pesos ARS</Text>
+                    <Text style={CrearEnvioStyles.modalText}>El precio es de {precio}.00$ ARS</Text>
+                    <Text style={CrearEnvioStyles.modalTextAclaracion}>(*)En caso de tener descuento se aplica sobre el precio final</Text>
                     <View>
                         <Button color="#08AFA5" title="VOLVER" onPress={toggleModal} />
                     </View>

@@ -9,6 +9,9 @@ export default StyleSheet.create(
             paddingTop:100,
             backgroundColor: '#003348'
         },
+        contenido:{
+            marginTop: '60%'
+        },  
         tituloPrincipal:{
             marginTop:50,
             padding: 20,
@@ -102,4 +105,10 @@ export default StyleSheet.create(
             color: '#FFF',
             fontSize: 20,
         },
+        imagen:{
+            flex: 1,
+            resizeMode: 'cover',
+            justifyContent: 'center'
+
+        }
     })

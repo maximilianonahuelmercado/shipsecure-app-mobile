@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback  } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { db, auth, rt } from '../database/firebase';
-import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble, Send} from 'react-native-gifted-chat'
 import { Ionicons } from '@expo/vector-icons'
 
 const ChatScreen = (props) => {
@@ -9,23 +9,11 @@ const ChatScreen = (props) => {
     const messagesRef = db.collection('messagesRN')
     //const idPedido = (props.route.params.idPedido).toString()
     const idPedido = props.route.params.idPedido
-    const emailUsuario = props.route.params.email
+    
 
     /*GiftedChat maneja sus estilos en el tag por eso no hay archivo de styles asociada a esta screen*/
     useEffect(() => {
-        console.log(emailUsuario)
-        if(emailUsuario === auth?.currentUser?.email){
-            rt.ref('/notificacion').update({
-            mensajeRepartidor : true
-            })
-        }
-        else{
-            rt.ref('/notificacion').update({
-            mensajeUsuario : true
-            })
-        }
        
-
         const unsubscribe = messagesRef.where("user.idPedido", "==", idPedido).onSnapshot((querySnapshot) => {
             const messagesFirestore = querySnapshot
                 .docChanges()
@@ -54,6 +42,7 @@ const ChatScreen = (props) => {
         await Promise.all(writes)
     }
 
+    
 
 
     const renderBubble = (props) => {
@@ -62,7 +51,7 @@ const ChatScreen = (props) => {
      }
 
     return (
-        
+            
             <GiftedChat
             messages={messages}
             showAvatarForEveryMessage={true}

@@ -73,7 +73,7 @@ export default StyleSheet.create(
             alignSelf: 'center',
             backgroundColor: '#003348',
             width: "90%",
-            height: "30%",
+            height: "50%",
             alignItems: "center",
             justifyContent: "center",
         },

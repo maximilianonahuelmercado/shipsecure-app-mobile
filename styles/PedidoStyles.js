@@ -50,6 +50,38 @@ export default StyleSheet.create(
             alignSelf: 'center',
             marginBottom: 25
             
-        }
+        },
+        modal: {
+            alignSelf: 'center',
+            backgroundColor: '#003348',
+            width: "90%",
+            height: "50%",
+            alignItems: "center",
+            justifyContent: "center",
+        },
+        modalText: {
+            padding: 30,
+            paddingTop: 0,
+            color: '#000',
+            fontSize: 17,
+            fontWeight: 'bold',
+            marginBottom: '20%'
+        },
+        modalTextAclaracion:{
+            paddingLeft: 10,
+            color: '#FFF',
+            fontSize: 10,
+            fontWeight: 'bold',
+        },
+        modalCaja:{
+            
+            alignSelf: 'flex-start',
+            marginBottom: '20%'
+        },
+        modalTextCamposObligatorios:{
+            alignSelf: 'center',
+            color: '#FFF',
+            fontSize: 20,
+        },
     }
 )

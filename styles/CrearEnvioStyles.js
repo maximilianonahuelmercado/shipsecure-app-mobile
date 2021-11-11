@@ -86,15 +86,14 @@ export default StyleSheet.create(
             justifyContent: "center",
         },
         modalText: {
-            padding: 30,
-            paddingTop: 0,
-            color: '#000',
-            fontSize: 17,
+            color: '#FFF',
+            fontSize: 20,
             fontWeight: 'bold',
-            marginBottom: '20%'
+            marginBottom: '5%'
         },
         modalTextAclaracion:{
-            paddingLeft: 10,
+           alignSelf: 'center',
+           marginBottom: '3%',
             color: '#FFF',
             fontSize: 10,
             fontWeight: 'bold',
@@ -102,7 +101,7 @@ export default StyleSheet.create(
         modalCaja:{
             
             alignSelf: 'flex-start',
-            marginBottom: '20%'
+            marginBottom: '5%'
         },
         modalTextCamposObligatorios:{
             alignSelf: 'center',
