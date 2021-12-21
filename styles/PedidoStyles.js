@@ -13,6 +13,12 @@ export default StyleSheet.create(
             fontSize: 20,
             color: '#08AFA5'
         },
+        activityIndicator:{
+            flex: 1, 
+            paddingTop: '60%',
+            justifyContent: 'center', 
+            alignItems: 'center'
+        },
         inputLabelPedidoId:{
             padding: 10,
             paddingTop:0,

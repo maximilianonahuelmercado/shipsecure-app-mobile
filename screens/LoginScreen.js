@@ -15,6 +15,7 @@ const LoginScreen = ({ navigation }) => {
     const image = { uri: "https://i.ibb.co/vk5CGz2/background.png" };
 
     const signIn = () => {
+
         auth.signInWithEmailAndPassword(email, password)
             .catch((error) => {
                 console.log(error)

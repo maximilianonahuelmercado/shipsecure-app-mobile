@@ -149,9 +149,9 @@ const CrearEnvioScreen = (props) => {
 
         var pesos = 0.00
         /*Calculo costos de caja en base al peso*/
-        if(peso >= 30){
+        if(peso >= 30000){
             pesos += costos.cajaGrande
-        }else if(peso >=15){
+        }else if(peso >=15000){
             pesos += costos.cajaMediana
         }
         else{
@@ -204,9 +204,7 @@ const CrearEnvioScreen = (props) => {
         }
         /*Calculo si es reprogramado*/
         if (isSelected){
-            console.log(pesos)
-            console.log(costos.precioProgramado)
-            console.log(descuento)
+
             pesos = pesos + costos.precioProgramado - descuento
         }
         else{
@@ -234,7 +232,7 @@ const CrearEnvioScreen = (props) => {
             //generamos un random de 6 digitos para el id de envio
             //const idDoc = (100000 + Math.floor(Math.random() * 900000)).toString()
             //Para test rapido
-            const idDoc = "800001"
+            const idDoc = "700004"
             entityRef.doc(idDoc).set({
                 id: idDoc,
                 nombres: nombre,
@@ -251,10 +249,10 @@ const CrearEnvioScreen = (props) => {
                 horaEntrega: flag ? moment(hour).locale('es').format('LT') : "9:00 - 20:00",
                 peso: parseInt(peso),
                 temperatura: parseInt(temperatura),
-                precio: precio,
+                costo: precio,
                 //estos campos seran necesarios luego para asignar un repartidor, una smartbox
                 usuarioCreado: false,
-                idRepartidor: "",
+                idRepartidor: "repartidor1@gmail.com",
             })
             rt.ref('/envio').update({
                 idQR: idDoc,

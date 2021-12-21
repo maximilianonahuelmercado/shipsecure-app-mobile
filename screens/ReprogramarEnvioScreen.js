@@ -19,6 +19,9 @@ const ReprogramarEnvioScreen = (props) => {
     //props necesarias para que los hooks tengan un valor por defecto, de lo contrario si algun dato no se quiere actualizar se va a updatear igual en la base como vacio
     const idPedido = (props.route.params.idPedido).toString()
     const direccionOriginal = (props.route.params.direccion).toString()
+    const piso = (props.route.params.piso).toString()
+    const localidad = (props.route.params.localidad).toString()
+    const codigoPostal = (props.route.params.codigoPostal).toString()
     const observaciones = (props.route.params.observaciones).toString()
     const costo = (props.route.params.costo).toString()
 
@@ -27,6 +30,9 @@ const ReprogramarEnvioScreen = (props) => {
     const [isSelectedDirection, setIsSelectedDirection] = useState(false)
     const [direccion, setDireccion] = useState(direccionOriginal)
     const [descripcion, setDescripcion] = useState(observaciones)
+    const [pisodepto, setPisoDepto] = useState(piso)
+    const [local, setLocal] = useState(localidad)
+    const [cp, setCP] = useState(codigoPostal)
 
     const [date, setDate] = useState(new Date(Date.now()));
     const [hour, setHour] = useState(new Date(Date.now()))
@@ -126,6 +132,12 @@ const ReprogramarEnvioScreen = (props) => {
             <View>
                <Text style={ReprogramarEnvioStyles.label}>Dirección</Text>
                <TextInput style={isSelectedDirection ? ReprogramarEnvioStyles.input : ReprogramarEnvioStyles.inputBloq } editable={isSelectedDirection == true ? true : false} value={direccion} onChangeText={(text)=>setDireccion(text)}></TextInput>
+               <Text style={ReprogramarEnvioStyles.label}>Piso/Dpto</Text>
+               <TextInput style={isSelectedDirection ? ReprogramarEnvioStyles.input : ReprogramarEnvioStyles.inputBloq} editable={isSelectedDirection == true ? true : false}  value={pisodepto} onChangeText={(text)=>setPisoDepto(text)}></TextInput>
+               <Text style={ReprogramarEnvioStyles.label}>Localidad</Text>
+               <TextInput style={isSelectedDirection ? ReprogramarEnvioStyles.input : ReprogramarEnvioStyles.inputBloq} editable={isSelectedDirection == true ? true : false}  value={local} onChangeText={(text)=>setLocal(text)}></TextInput>
+               <Text style={ReprogramarEnvioStyles.label}>Código Postal</Text>
+               <TextInput style={isSelectedDirection ? ReprogramarEnvioStyles.input : ReprogramarEnvioStyles.inputBloq} editable={isSelectedDirection == true ? true : false}  value={cp} onChangeText={(text)=>setCP(text)}></TextInput>
                <Text style={ReprogramarEnvioStyles.label}>Descripcion</Text>
                <TextInput style={isSelectedDirection ? ReprogramarEnvioStyles.inputMultiline : ReprogramarEnvioStyles.inputMultilineBloq} editable={isSelectedDirection == true ? true : false} multiline={true} numberOfLines={4} value={descripcion} onChangeText={(text)=>setDescripcion(text)}></TextInput>
             </View>
@@ -182,7 +194,7 @@ const ReprogramarEnvioScreen = (props) => {
                         <View style={ReprogramarEnvioStyles.modalCaja}>
                         </View>
                         <View>
-                            <Button color="#08AFA5" title="VOLVER" onPress={()=>props.navigation.navigate("Home")} />
+                            <Button color="#08AFA5" title="VOLVER" onPress={()=>props.navigation.navigate("Pedido")} />
                         </View>
                 </View>
             </Modal>

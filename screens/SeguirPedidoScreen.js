@@ -256,6 +256,7 @@ const SeguirPedidoScreen = (props) => {
 
   const [coordenadas, setCoordenadas] = useState([])
 
+  /*
   useEffect(()=>{
     (async () => {
     
@@ -280,7 +281,7 @@ const SeguirPedidoScreen = (props) => {
         ])
       })
   })();
-  }, [])
+  }, [])*/
 
   useEffect(()=>{
   },[mapRegion])
@@ -289,7 +290,7 @@ const SeguirPedidoScreen = (props) => {
   }, [coordenadas])
 
   //Original para el dia de la presentacion
-  /*useEffect(() => {
+  useEffect(() => {
     rt.ref('/sensores').on('value', snapshot => {
       const mr = {
         latitude: parseFloat(snapshot.val().latitude),
@@ -298,8 +299,15 @@ const SeguirPedidoScreen = (props) => {
         longitudeDelta: 0.005
       }
       setmapRegion(mr)
+      setCoordenadas(prevCoords => [
+        ...prevCoords,
+        { 
+          latitude: parseFloat(snapshot.val().latitude),
+          longitude: parseFloat(snapshot.val().longitude)
+        }
+      ])
     })
-  }, [])*/
+  }, [])
 
 
 
